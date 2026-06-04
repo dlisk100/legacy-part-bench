@@ -8,3 +8,5 @@ __pycache__/
 .ruff_cache/
 .mypy_cache/
 .venv/
+
+data/results/**/_previews/

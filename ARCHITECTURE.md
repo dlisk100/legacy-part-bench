@@ -115,7 +115,9 @@ Owns run storage, summary files, and optional SQLite indexing.
 
 ### `legacy_part_bench.dashboard`
 
-Owns Streamlit UI.
+Owns Streamlit UI, result discovery, leaderboard aggregation, part-detail views,
+and static STL preview rendering. The dashboard reads file-based run artifacts
+from `data/results` and caches rendered preview PNGs in `_previews` folders.
 
 ## Coordinate convention
 

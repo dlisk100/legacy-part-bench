@@ -400,17 +400,29 @@ python scripts/run_benchmark.py \
 streamlit run legacy_part_bench/dashboard/streamlit_app.py
 ```
 
-Dashboard should show:
+The dashboard reads run folders under `data/results` by default. Use the sidebar
+to point it at a different results directory. It discovers any folder containing
+`scorecard.json` and, when available, `run_config.json`, `execution_log.json`,
+`raw_response.txt`, `extracted_code.py`, and generated CAD artifacts.
+
+Dashboard shows:
 
 - model leaderboard,
 - average score by model,
+- category scores,
 - score by prompt mode,
 - failed execution table,
 - per-part result details,
 - input drawing,
+- scorecard,
+- raw model response,
 - generated code,
 - execution logs,
-- target/generated previews when available.
+- artifact paths,
+- target/generated STL previews when available.
+
+Static STL previews are rendered to `_previews/*.png` folders next to results and
+are reused until the STL content changes.
 
 ## Current limitations
 
