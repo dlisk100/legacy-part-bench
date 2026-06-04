@@ -23,16 +23,20 @@ always write execution_log.json
 Suggested Docker flags:
 
 ```bash
-docker run \
-  --rm \
-  --network none \
-  --cpus 1 \
-  --memory 2g \
-  -v /host/run_dir:/work:rw \
-  legacy-part-bench-cad-sandbox
+python -m legacy_part_bench.sandbox.sandbox_runner --build-image \
+  --code-file data/results/example/extracted_code.py \
+  --output-dir data/results/example
 ```
 
 Use an outer Python timeout as well.
+
+The Docker runner mounts the generated code as a read-only file at
+`/work/input.py` and mounts only the run output directory at `/work/output`.
+It passes `--network none`, `--cpus 1`, and `--memory 2g` by default. The local
+executor is still available for development, but model-generated code should use
+the Docker runner once Docker is available. The sandbox also defaults to
+`--platform linux/amd64` so CadQuery binary dependencies resolve reliably on
+Apple Silicon Docker hosts.
 
 ## Do not expose secrets
 

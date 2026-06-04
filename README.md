@@ -163,6 +163,19 @@ Units are millimeters.
 
 The prompt to models should repeat this convention and require the final CadQuery object to be assigned to a variable named `result`.
 
+Phase-2 prompt helpers live in `legacy_part_bench.models`:
+
+```python
+from legacy_part_bench.models import extract_python_code, render_prompt
+
+prompt = render_prompt(
+    "image_plus_spec_v1",
+    metadata=metadata,
+    image_path=part_dir / "drawing.png",
+)
+code = extract_python_code(raw_model_response)
+```
+
 ## Dataset item structure
 
 Each benchmark item should live in its own folder:
@@ -281,6 +294,41 @@ python scripts/evaluate_local_answer.py \
 ```
 
 Only after local generation, execution, and scoring works should model calls be added.
+
+## CAD execution
+
+Generated CadQuery answers must assign the final part to `result`. Phase 3 provides
+a local child-process executor:
+
+```bash
+python -m legacy_part_bench.sandbox.execute_cadquery \
+  --code-file examples/answers/plate_0001_good.py \
+  --output-dir data/results/local_test/plate_0001
+```
+
+The executor writes:
+
+```text
+generated.step
+generated.stl
+execution_log.json
+```
+
+Valid code exports STEP/STL. Syntax errors, missing `result`, runtime errors, export
+errors, and timeouts still produce `execution_log.json`.
+
+For untrusted model output, use the Docker sandbox:
+
+```bash
+python -m legacy_part_bench.sandbox.sandbox_runner --build-image \
+  --code-file examples/answers/plate_0001_good.py \
+  --output-dir data/results/docker_test/plate_0001
+```
+
+The Docker runner uses `--network none`, CPU/memory limits, read-only mounting for
+the code file, a writable mounted output directory, an outer timeout, and
+`--platform linux/amd64` by default for CadQuery wheel compatibility on Apple
+Silicon Docker hosts.
 
 ## Model benchmark flow
 

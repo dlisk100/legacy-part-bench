@@ -125,3 +125,20 @@ intro paragraph + code
 ```
 
 Prefer the first fenced Python block if present.
+
+The phase-2 API is:
+
+```python
+from legacy_part_bench.models import extract_python_code, render_prompt
+
+prompt = render_prompt(
+    "image_plus_spec_v1",
+    metadata=metadata,
+    image_path=part_dir / "drawing.png",
+)
+code = extract_python_code(raw_model_response)
+```
+
+`text_spec_v1` and `image_plus_spec_v1` render a stable structured JSON spec from
+metadata by default. `image_only_v1` omits the structured spec but still requires
+the drawing image and repeats the CadQuery output contract.
