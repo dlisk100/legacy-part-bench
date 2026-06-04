@@ -1,0 +1,26 @@
+```python
+import cadquery as cq
+
+# Define dimensions
+length = 111.154
+width = 41.501
+thickness = 6.2
+
+# Create the base plate
+result = (
+    cq.Workplane("XY")
+    .box(length, width, thickness)
+    .faces(">Z")
+)
+
+# Add holes
+hole_diameter = 4.837
+hole_positions = [
+    (13.759, 26.082),
+    (97.395, 26.082)
+]
+
+for pos in hole_positions:
+    result = result.faces(">Z").workplane().center(pos[0] - length / 2, pos[1] - width / 2).hole(hole_diameter)
+
+```

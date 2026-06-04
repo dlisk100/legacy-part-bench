@@ -1,0 +1,16 @@
+{
+  "run_type": "openrouter_model",
+  "part_id": "plate_0001",
+  "part_dir": "/Users/davidlisk/Development/legacy-part-bench/data/benchmark/plate_0001",
+  "model": "openai/gpt-4o-mini",
+  "prompt_mode": "image_plus_spec_v1",
+  "prompt_version": "v1",
+  "temperature": 0.0,
+  "max_tokens": null,
+  "timeout_seconds": 30.0,
+  "executor": "docker",
+  "run_key": "2a740c1f9f606f33d3ea1fbbe3a4ea20fe7d260924d8c476ca31fa43f709d13f",
+  "image_path": "/Users/davidlisk/Development/legacy-part-bench/data/benchmark/plate_0001/drawing.png",
+  "prompt_text": "You are given a dimensioned mechanical drawing image and a structured summary of the same part.\n\nCreate executable CadQuery Python code for the part.\n\nRequirements:\n- Use CadQuery.\n- Use millimeters.\n- Place the lower-left-bottom corner of the part at (0, 0, 0).\n- Length runs along +X.\n- Width runs along +Y.\n- Thickness/height runs along +Z.\n- Assign the final CadQuery object to a variable named `result`.\n- Return only Python code. Do not include Markdown or explanations.\n\nStructured summary:\n{\n  \"difficulty\": 1,\n  \"dimensions\": {\n    \"length\": 111.154,\n    \"thickness\": 6.2,\n    \"width\": 41.501\n  },\n  \"family\": \"mounting_plate\",\n  \"features\": {\n    \"holes\": [\n      {\n        \"center\": [\n          13.759,\n          26.082\n        ],\n        \"diameter\": 4.837,\n        \"through\": true\n      },\n      {\n        \"center\": [\n          97.395,\n          26.082\n        ],\n        \"diameter\": 4.837,\n        \"through\": true\n      }\n    ],\n    \"slots\": []\n  },\n  \"files\": {\n    \"drawing_png\": \"drawing.png\",\n    \"target_step\": \"target.step\",\n    \"target_stl\": \"target.stl\"\n  },\n  \"id\": \"plate_0001\",\n  \"units\": \"mm\"\n}\n",
+  "created_at_utc": "2026-06-04T22:09:51.484190+00:00"
+}

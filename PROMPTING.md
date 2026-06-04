@@ -142,3 +142,22 @@ code = extract_python_code(raw_model_response)
 `text_spec_v1` and `image_plus_spec_v1` render a stable structured JSON spec from
 metadata by default. `image_only_v1` omits the structured spec but still requires
 the drawing image and repeats the CadQuery output contract.
+
+## OpenRouter runner
+
+The one-model runner sends prompts through `legacy_part_bench.models.OpenRouterClient`.
+Text-only prompts are sent as a normal user message. Image prompts send message
+content as a list with the text prompt first and `drawing.png` second as a
+base64 `image_url` data URL.
+
+```bash
+python scripts/run_one_model.py \
+  --part-dir data/benchmark/plate_0001 \
+  --model openai/gpt-4o-mini \
+  --prompt-mode image_plus_spec_v1 \
+  --output-dir data/results/openrouter_test/plate_0001
+```
+
+The runner reads `OPENROUTER_API_KEY`, caches raw responses by model, part id,
+prompt mode, prompt version, image hash, and temperature, then writes the usual
+run artifacts before scoring. Use `--force` to bypass the cache.

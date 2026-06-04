@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "status": "success",
+  "code_path": "/work/input.py",
+  "output_dir": "/work/output",
+  "generated_step": "generated.step",
+  "generated_stl": "generated.stl",
+  "duration_seconds": 12.54871,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "error": null,
+  "traceback": null,
+  "artifacts": {
+    "generated.step": true,
+    "generated.stl": true,
+    "execution_log.json": true
+  }
+}

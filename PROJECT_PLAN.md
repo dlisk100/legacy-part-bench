@@ -258,6 +258,33 @@ produces a scorecard.
 
 ## Phase 6 — Model integration
 
+### Milestone 17: OpenRouter one-model runner
+
+Call one OpenRouter model for one benchmark item, cache the raw response, parse
+the answer, execute it in the sandbox, and write the scorecard.
+
+Acceptance:
+
+```bash
+python scripts/run_one_model.py \
+  --part-dir data/benchmark/plate_0001 \
+  --model openai/gpt-4o-mini \
+  --prompt-mode image_plus_spec_v1 \
+  --output-dir data/results/openrouter_test/plate_0001
+```
+
+produces:
+
+```text
+run_config.json
+raw_response.txt if the model call succeeds or is cached
+extracted_code.py if response parsing succeeds
+execution_log.json
+scorecard.json
+```
+
+Live tests must not require OpenRouter. Unit tests should mock model calls.
+
 ### Milestone 17: OpenRouter client
 
 Implement model calls through OpenRouter.

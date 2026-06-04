@@ -176,6 +176,22 @@ prompt = render_prompt(
 code = extract_python_code(raw_model_response)
 ```
 
+Phase-6 model runs call OpenRouter, cache raw responses, execute extracted code,
+and score the generated CAD:
+
+```bash
+python scripts/run_one_model.py \
+  --part-dir data/benchmark/plate_0001 \
+  --model openai/gpt-4o-mini \
+  --prompt-mode image_plus_spec_v1 \
+  --output-dir data/results/openrouter_test/plate_0001
+```
+
+Set `OPENROUTER_API_KEY` before live model runs. The cache key uses the model,
+part id, prompt mode, prompt version, drawing image hash, and temperature; pass
+`--force` to bypass a cached response. Docker is the default executor for
+model-generated code; use `--executor local` only for local development.
+
 ## Dataset item structure
 
 Each benchmark item should live in its own folder:

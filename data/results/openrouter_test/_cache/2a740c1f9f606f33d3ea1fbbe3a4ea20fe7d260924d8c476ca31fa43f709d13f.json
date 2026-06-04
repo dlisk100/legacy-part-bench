@@ -1,0 +1,51 @@
+{
+  "model": "openai/gpt-4o-mini",
+  "raw_response": "```python\nimport cadquery as cq\n\n# Define dimensions\nlength = 111.154\nwidth = 41.501\nthickness = 6.2\n\n# Create the base plate\nresult = (\n    cq.Workplane(\"XY\")\n    .box(length, width, thickness)\n    .faces(\">Z\")\n)\n\n# Add holes\nhole_diameter = 4.837\nhole_positions = [\n    (13.759, 26.082),\n    (97.395, 26.082)\n]\n\nfor pos in hole_positions:\n    result = result.faces(\">Z\").workplane().center(pos[0] - length / 2, pos[1] - width / 2).hole(hole_diameter)\n\n```",
+  "provider_response": {
+    "id": "gen-1780610991-g6efZt8MTHNmSRiBgOQ4",
+    "object": "chat.completion",
+    "created": 1780610991,
+    "model": "openai/gpt-4o-mini",
+    "provider": "Azure",
+    "system_fingerprint": "fp_4dcfea0a44",
+    "service_tier": null,
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport cadquery as cq\n\n# Define dimensions\nlength = 111.154\nwidth = 41.501\nthickness = 6.2\n\n# Create the base plate\nresult = (\n    cq.Workplane(\"XY\")\n    .box(length, width, thickness)\n    .faces(\">Z\")\n)\n\n# Add holes\nhole_diameter = 4.837\nhole_positions = [\n    (13.759, 26.082),\n    (97.395, 26.082)\n]\n\nfor pos in hole_positions:\n    result = result.faces(\">Z\").workplane().center(pos[0] - length / 2, pos[1] - width / 2).hole(hole_diameter)\n\n```",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 37158,
+      "completion_tokens": 153,
+      "total_tokens": 37311,
+      "cost": 0.0056655,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0056655,
+        "upstream_inference_prompt_cost": 0.0055737,
+        "upstream_inference_completions_cost": 9.18e-05
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "created_at_utc": "2026-06-04T22:09:55.256947+00:00"
+}
