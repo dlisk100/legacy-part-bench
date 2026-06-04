@@ -300,6 +300,17 @@ python scripts/evaluate_local_answer.py \
   --output-dir data/results/local_test/plate_0001
 ```
 
+The local run folder contains:
+
+```text
+run_config.json
+extracted_code.py
+generated.step
+generated.stl
+execution_log.json
+scorecard.json
+```
+
 To score an already executed run folder, omit `--code-file` and pass the same
 benchmark item and run directory:
 

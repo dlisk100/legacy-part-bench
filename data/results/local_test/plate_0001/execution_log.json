@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "status": "success",
+  "code_path": "/Users/davidlisk/Development/legacy-part-bench/data/results/local_test/plate_0001/extracted_code.py",
+  "output_dir": "/Users/davidlisk/Development/legacy-part-bench/data/results/local_test/plate_0001",
+  "generated_step": "generated.step",
+  "generated_stl": "generated.stl",
+  "duration_seconds": 1.312085,
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "error": null,
+  "traceback": null,
+  "artifacts": {
+    "generated.step": true,
+    "generated.stl": true,
+    "execution_log.json": true
+  }
+}

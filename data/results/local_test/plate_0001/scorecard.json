@@ -1,0 +1,180 @@
+{
+  "total_score": 99.999998,
+  "max_score": 100.0,
+  "categories": {
+    "execution": {
+      "score": 20.0,
+      "max_score": 20.0,
+      "details": {
+        "success": true,
+        "status": "success",
+        "duration_seconds": 1.312085,
+        "error": null,
+        "artifacts": {
+          "generated.step": true,
+          "generated.stl": true,
+          "execution_log.json": true
+        }
+      }
+    },
+    "export": {
+      "score": 10.0,
+      "max_score": 10.0,
+      "details": {
+        "generated_geometry": {
+          "path": "data/results/local_test/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 28372.84862458125,
+          "vertex_count": 512,
+          "face_count": 1028,
+          "error": null
+        }
+      }
+    },
+    "bbox": {
+      "score": 19.999998,
+      "max_score": 20.0,
+      "details": {
+        "target_extents": [
+          111.154,
+          41.501,
+          6.2
+        ],
+        "generated_extents": [
+          111.15399932861328,
+          41.500999450683594,
+          6.199999809265137
+        ],
+        "relative_errors": [
+          6.040148938517923e-09,
+          1.3236220908397866e-08,
+          3.076368765465898e-08
+        ],
+        "dimension_scores": [
+          0.9999999697992553,
+          0.9999999338188954,
+          0.9999998461815617
+        ],
+        "generated_geometry": {
+          "path": "data/results/local_test/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 28372.84862458125,
+          "vertex_count": 512,
+          "face_count": 1028,
+          "error": null
+        }
+      }
+    },
+    "volume": {
+      "score": 15.0,
+      "max_score": 15.0,
+      "details": {
+        "target_volume": 28372.84862458125,
+        "generated_volume": 28372.84862458125,
+        "relative_error": 0.0,
+        "target_geometry": {
+          "path": "data/benchmark/plate_0001/target.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 28372.84862458125,
+          "vertex_count": 512,
+          "face_count": 1028,
+          "error": null
+        },
+        "generated_geometry": {
+          "path": "data/results/local_test/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 28372.84862458125,
+          "vertex_count": 512,
+          "face_count": 1028,
+          "error": null
+        }
+      }
+    },
+    "features": {
+      "score": 35.0,
+      "max_score": 35.0,
+      "details": {
+        "expected_holes": 2,
+        "detected_expected_holes": 2,
+        "missed_holes": [],
+        "detections": [
+          {
+            "expected_center": [
+              13.759,
+              26.082
+            ],
+            "expected_diameter": 4.837,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.38695999999999997
+          },
+          {
+            "expected_center": [
+              97.395,
+              26.082
+            ],
+            "expected_diameter": 4.837,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.38695999999999997
+          }
+        ],
+        "generated_geometry": {
+          "path": "data/results/local_test/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 28372.84862458125,
+          "vertex_count": 512,
+          "face_count": 1028,
+          "error": null
+        },
+        "heuristic": "Detects expected through holes by looking for mesh vertices on the expected circular wall with broad angular coverage and vertices near both top and bottom surfaces."
+      }
+    }
+  },
+  "passed": true,
+  "notes": []
+}
