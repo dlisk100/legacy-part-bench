@@ -1,0 +1,16 @@
+You are given a mechanical part specification.
+
+Create executable CadQuery Python code for the part.
+
+Requirements:
+- Use CadQuery.
+- Use millimeters.
+- Place the lower-left-bottom corner of the part at (0, 0, 0).
+- Length runs along +X.
+- Width runs along +Y.
+- Thickness/height runs along +Z.
+- Assign the final CadQuery object to a variable named `result`.
+- Return only Python code. Do not include Markdown or explanations.
+
+Part specification:
+{{ structured_spec }}

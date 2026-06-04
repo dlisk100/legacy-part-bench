@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "legacy-part-bench"
+version = "0.1.0"
+description = "Benchmark for reconstructing editable 3D CAD from 2D mechanical drawings using multimodal LMs."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "David Lisk" }
+]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pillow>=10.0",
+  "matplotlib>=3.8",
+  "trimesh>=4.4",
+  "requests>=2.32",
+  "python-dotenv>=1.0",
+  "pydantic>=2.7",
+  "streamlit>=1.35"
+]
+
+[project.optional-dependencies]
+cad = [
+  "cadquery>=2.4"
+]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.5",
+  "mypy>=1.10"
+]
+all = [
+  "legacy-part-bench[cad,dev]"
+]
+
+[tool.setuptools.packages.find]
+include = ["legacy_part_bench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "integration: tests that require Docker, CadQuery, or external tools"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+ignore_missing_imports = true
