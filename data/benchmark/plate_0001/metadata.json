@@ -1,0 +1,37 @@
+{
+  "id": "plate_0001",
+  "family": "mounting_plate",
+  "units": "mm",
+  "difficulty": 1,
+  "dimensions": {
+    "length": 111.154,
+    "width": 41.501,
+    "thickness": 6.2
+  },
+  "features": {
+    "holes": [
+      {
+        "diameter": 4.837,
+        "center": [
+          13.759,
+          26.082
+        ],
+        "through": true
+      },
+      {
+        "diameter": 4.837,
+        "center": [
+          97.395,
+          26.082
+        ],
+        "through": true
+      }
+    ],
+    "slots": []
+  },
+  "files": {
+    "drawing_png": "drawing.png",
+    "target_step": "target.step",
+    "target_stl": "target.stl"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "audit_plate_0002_four_corner_holes",
+  "family": "mounting_plate",
+  "units": "mm",
+  "difficulty": 1,
+  "dimensions": {
+    "length": 120.0,
+    "width": 80.0,
+    "thickness": 6.0
+  },
+  "features": {
+    "holes": [
+      {
+        "diameter": 8.0,
+        "center": [
+          20.0,
+          20.0
+        ],
+        "through": true
+      },
+      {
+        "diameter": 8.0,
+        "center": [
+          100.0,
+          20.0
+        ],
+        "through": true
+      },
+      {
+        "diameter": 8.0,
+        "center": [
+          20.0,
+          60.0
+        ],
+        "through": true
+      },
+      {
+        "diameter": 8.0,
+        "center": [
+          100.0,
+          60.0
+        ],
+        "through": true
+      }
+    ],
+    "slots": []
+  },
+  "files": {
+    "drawing_png": "drawing.png",
+    "target_step": "target.step",
+    "target_stl": "target.stl"
+  }
+}

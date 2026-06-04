@@ -1,0 +1,37 @@
+{
+  "id": "audit_plate_0001_two_holes",
+  "family": "mounting_plate",
+  "units": "mm",
+  "difficulty": 1,
+  "dimensions": {
+    "length": 100.0,
+    "width": 60.0,
+    "thickness": 8.0
+  },
+  "features": {
+    "holes": [
+      {
+        "diameter": 6.0,
+        "center": [
+          20.0,
+          20.0
+        ],
+        "through": true
+      },
+      {
+        "diameter": 6.0,
+        "center": [
+          80.0,
+          40.0
+        ],
+        "through": true
+      }
+    ],
+    "slots": []
+  },
+  "files": {
+    "drawing_png": "drawing.png",
+    "target_step": "target.step",
+    "target_stl": "target.stl"
+  }
+}
