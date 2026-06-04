@@ -236,6 +236,13 @@ Initial 100-point score:
 | Volume similarity | 15 |
 | Hole/feature correctness | 35 |
 
+The v0 evaluators load STL files with `trimesh`, compare bounding-box extents
+against metadata dimensions, compare volume against the target STL, and use a
+mounting-plate-specific through-hole heuristic. The feature heuristic looks for
+mesh vertices on the expected circular hole wall near both top and bottom faces;
+it is intentionally simple, but distinguishes correct, partially missing, and
+absent through holes for the MVP.
+
 Example scorecard:
 
 ```json
@@ -291,6 +298,15 @@ python scripts/evaluate_local_answer.py \
   --part-dir data/benchmark/plate_0001 \
   --code-file examples/answers/plate_0001_good.py \
   --output-dir data/results/local_test/plate_0001
+```
+
+To score an already executed run folder, omit `--code-file` and pass the same
+benchmark item and run directory:
+
+```bash
+python scripts/evaluate_local_answer.py \
+  --item-dir data/benchmark/plate_0001 \
+  --run-dir data/results/local_test/plate_0001
 ```
 
 Only after local generation, execution, and scoring works should model calls be added.

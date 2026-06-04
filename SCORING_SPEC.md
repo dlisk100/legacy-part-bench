@@ -87,6 +87,12 @@ missing some holes
 missing all holes
 ```
 
+Current v0 implementation detects an expected through hole by looking for STL
+mesh vertices near the expected circular wall radius, with enough angular
+coverage and vertices near both the top and bottom of the part. This is an MVP
+heuristic for generated mounting plates, not a general feature-recognition
+system.
+
 ## Scorecard format
 
 ```json
