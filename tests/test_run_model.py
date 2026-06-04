@@ -22,8 +22,31 @@ class FakeClient:
         self.calls += 1
         return OpenRouterResponse(
             content=self.content,
-            raw_json={"choices": [{"message": {"content": self.content}}]},
+            raw_json={
+                "id": "gen-test",
+                "model": kwargs["model"],
+                "choices": [{"message": {"content": self.content}}],
+                "usage": {
+                    "prompt_tokens": 11,
+                    "completion_tokens": 7,
+                    "total_tokens": 18,
+                    "cost": 0.00018,
+                },
+            },
             model=kwargs["model"],
+            usage={
+                "generation_id": "gen-test",
+                "model": kwargs["model"],
+                "prompt_tokens": 11,
+                "completion_tokens": 7,
+                "total_tokens": 18,
+                "cost": 0.00018,
+                "is_byok": None,
+                "prompt_tokens_details": None,
+                "completion_tokens_details": None,
+                "cost_details": None,
+            },
+            generation_id="gen-test",
         )
 
 
@@ -78,9 +101,16 @@ def test_run_model_on_item_writes_failure_artifacts_and_scorecard(tmp_path):
     assert client.calls == 1
     assert result.cache_hit is False
     assert (run_dir / "run_config.json").exists()
+    run_config = json.loads((run_dir / "run_config.json").read_text(encoding="utf-8"))
+    assert run_config["family"] == "mounting_plate"
+    assert run_config["difficulty"] == 1
+    assert run_config["cache_hit"] is False
+    assert run_config["usage"]["total_tokens"] == 18
     assert (run_dir / "raw_response.txt").read_text(encoding="utf-8") == (
         "import cadquery as cq\nx = 1\n"
     )
+    usage = json.loads((run_dir / "usage.json").read_text(encoding="utf-8"))
+    assert usage["cost"] == 0.00018
     assert (run_dir / "extracted_code.py").read_text(encoding="utf-8") == (
         "import cadquery as cq\nx = 1\n"
     )

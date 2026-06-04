@@ -10,6 +10,8 @@ from legacy_part_bench.dataset import (
     PartDimensions,
     PartFeatures,
     PartMetadata,
+    SlotFeature,
+    StepFeature,
     load_metadata,
     save_metadata,
 )
@@ -67,7 +69,9 @@ def test_metadata_json_round_trip_preserves_values(tmp_path):
                 },
             ],
             "slots": [],
+            "steps": [],
         },
+        "parameters": {},
         "files": {
             "drawing_png": "drawing.png",
             "target_step": "target.step",
@@ -129,6 +133,38 @@ def test_metadata_defaults_to_expected_artifact_filenames():
     assert metadata.files == FileReferences()
     assert metadata.features.holes == ()
     assert metadata.features.slots == ()
+    assert metadata.features.steps == ()
+
+
+def test_phase8_metadata_accepts_slots_steps_parameters_and_new_families():
+    plate = PartMetadata(
+        id="plate_0003",
+        family="mounting_plate",
+        difficulty=2,
+        dimensions=PartDimensions(length=100.0, width=60.0, thickness=8.0),
+        features=PartFeatures(
+            slots=(SlotFeature(length=24.0, width=6.0, center=(50.0, 30.0)),),
+        ),
+    )
+    stepped = PartMetadata(
+        id="step_0001",
+        family="stepped_block",
+        difficulty=3,
+        dimensions=PartDimensions(length=100.0, width=50.0, thickness=25.0),
+        features=PartFeatures(steps=(StepFeature(x_start=25.0, length=50.0, top_height=25.0),)),
+        parameters={"base_height": 10.0},
+    )
+    bracket = PartMetadata(
+        id="bracket_0001",
+        family="l_bracket",
+        difficulty=1,
+        dimensions=PartDimensions(length=100.0, width=60.0, thickness=70.0),
+        parameters={"flange_thickness": 8.0},
+    )
+
+    assert plate.features.slots[0].center == (50.0, 30.0)
+    assert stepped.features.steps[0].top_height == 25.0
+    assert bracket.parameters["flange_thickness"] == 8.0
 
 
 def test_benchmark_item_resolves_artifact_paths(tmp_path):

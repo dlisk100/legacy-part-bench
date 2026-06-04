@@ -1,0 +1,4 @@
+part_id,family,difficulty,model,prompt_mode,total_score,passed,execution_score,export_score,bbox_score,volume_score,features_score,prompt_tokens,completion_tokens,total_tokens,cost,run_dir
+plate_0001,mounting_plate,3,mistralai/ministral-3b-2512,image_plus_spec_v1,0.0,False,0.0,0.0,0.0,0.0,0.0,2697,221,2918,0.0002918,data/results/phase8_live_image_plus/mistralai__ministral-3b-2512/image_plus_spec_v1/plate_0001
+plate_0001,mounting_plate,3,qwen/qwen3-vl-32b-instruct,image_plus_spec_v1,0.0,False,0.0,0.0,0.0,0.0,0.0,3160,321,3481,0.000462176,data/results/phase8_live_image_plus/qwen__qwen3-vl-32b-instruct/image_plus_spec_v1/plate_0001
+plate_0001,mounting_plate,3,openai/gpt-5.2-codex,image_plus_spec_v1,99.999998,True,20.0,10.0,19.999998,15.0,35.0,3300,1694,4994,0.029491,data/results/phase8_live_image_plus/openai__gpt-5.2-codex/image_plus_spec_v1/plate_0001

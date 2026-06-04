@@ -1,0 +1,67 @@
+{
+  "total_score": 0.0,
+  "max_score": 100.0,
+  "categories": {
+    "execution": {
+      "score": 0.0,
+      "max_score": 20.0,
+      "details": {
+        "success": false,
+        "status": "runtime_error",
+        "duration_seconds": 10.632458,
+        "error": "AttributeError: 'Workplane' object has no attribute 'slot'",
+        "artifacts": {
+          "generated.step": false,
+          "generated.stl": false,
+          "execution_log.json": true
+        }
+      }
+    },
+    "export": {
+      "score": 0.0,
+      "max_score": 10.0,
+      "details": {
+        "generated_geometry": {
+          "path": "data/results/phase8_live_text_spec_haiku/anthropic__claude-3.5-haiku/text_spec_v1/plate_0001/generated.stl",
+          "exists": false,
+          "loadable": false,
+          "mesh_valid": false,
+          "watertight": false,
+          "extents": null,
+          "volume": null,
+          "vertex_count": 0,
+          "face_count": 0,
+          "error": "STL file does not exist."
+        }
+      }
+    },
+    "bbox": {
+      "score": 0.0,
+      "max_score": 20.0,
+      "details": {
+        "skipped": true,
+        "reason": "Execution failed."
+      }
+    },
+    "volume": {
+      "score": 0.0,
+      "max_score": 15.0,
+      "details": {
+        "skipped": true,
+        "reason": "Execution failed."
+      }
+    },
+    "features": {
+      "score": 0.0,
+      "max_score": 35.0,
+      "details": {
+        "skipped": true,
+        "reason": "Execution failed."
+      }
+    }
+  },
+  "passed": false,
+  "notes": [
+    "Execution failed; geometry and feature metrics were skipped."
+  ]
+}

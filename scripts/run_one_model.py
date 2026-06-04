@@ -7,6 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from legacy_part_bench.models import PROMPT_MODES, ModelRunConfig, run_model_on_item
 
 
@@ -32,7 +34,11 @@ def main() -> int:
         help="Execution backend for generated CAD code. Docker is the default sandbox.",
     )
     parser.add_argument("--force", action="store_true", help="Bypass cached model responses.")
+    parser.add_argument("--env-file", type=Path, help="Optional .env file containing OPENROUTER_API_KEY.")
     args = parser.parse_args()
+
+    if args.env_file is not None:
+        load_dotenv(args.env_file)
 
     result = run_model_on_item(
         item_dir=args.item_dir,

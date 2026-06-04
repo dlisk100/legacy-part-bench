@@ -3,7 +3,7 @@ import importlib.util
 
 import pytest
 
-from legacy_part_bench.dataset import HoleFeature, PartDimensions, PartFeatures, PartMetadata
+from legacy_part_bench.dataset import HoleFeature, PartDimensions, PartFeatures, PartMetadata, SlotFeature
 from legacy_part_bench.generators.mounting_plate import (
     build_mounting_plate,
     export_mounting_plate,
@@ -77,6 +77,41 @@ def test_build_mounting_plate_rejects_holes_outside_plate():
                 holes=(HoleFeature(diameter=10.0, center=(2.0, 20.0), through=True),),
                 slots=(),
             )
+        }
+    )
+
+    with pytest.raises(ValueError, match="beyond the plate length"):
+        build_mounting_plate(metadata)
+
+
+@requires_cadquery
+def test_build_mounting_plate_supports_horizontal_through_slots():
+    metadata = plate_metadata().model_copy(
+        update={
+            "difficulty": 2,
+            "features": PartFeatures(
+                holes=plate_metadata().features.holes,
+                slots=(SlotFeature(length=24.0, width=8.0, center=(50.0, 30.0)),),
+            ),
+        }
+    )
+
+    part = build_mounting_plate(metadata)
+    bounding_box = part.val().BoundingBox()
+
+    assert bounding_box.xlen == pytest.approx(100.0)
+    assert bounding_box.ylen == pytest.approx(60.0)
+    assert bounding_box.zlen == pytest.approx(8.0)
+
+
+def test_build_mounting_plate_rejects_slots_outside_plate():
+    metadata = plate_metadata().model_copy(
+        update={
+            "difficulty": 2,
+            "features": PartFeatures(
+                holes=(),
+                slots=(SlotFeature(length=40.0, width=8.0, center=(90.0, 30.0)),),
+            ),
         }
     )
 

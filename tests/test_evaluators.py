@@ -9,7 +9,7 @@ import numpy as np
 import pytest
 import trimesh
 
-from legacy_part_bench.dataset import HoleFeature, PartDimensions, PartFeatures, PartMetadata
+from legacy_part_bench.dataset import HoleFeature, PartDimensions, PartFeatures, PartMetadata, SlotFeature
 from legacy_part_bench.evaluators import (
     evaluate_bounding_box,
     evaluate_features,
@@ -75,6 +75,35 @@ def test_feature_eval_distinguishes_correct_partial_and_no_holes(tmp_path: Path)
     assert partial.details["detected_expected_holes"] == 1
     assert no_holes.score == pytest.approx(0.0)
     assert no_holes.details["detected_expected_holes"] == 0
+
+
+def test_feature_eval_scores_slots_and_featureless_parts(tmp_path: Path) -> None:
+    slot = SlotFeature(length=28.0, width=8.0, center=(50.0, 30.0), through=True)
+    metadata = _metadata(holes=()).model_copy(
+        update={
+            "difficulty": 2,
+            "features": PartFeatures(slots=(slot,)),
+        }
+    )
+    correct_stl = _export_slot_wall_mesh(tmp_path / "slot.stl", (slot,))
+    no_slot_stl = _export_box(tmp_path / "no_slot.stl", extents=(100.0, 60.0, 8.0))
+    featureless_metadata = PartMetadata(
+        id="step_eval",
+        family="stepped_block",
+        difficulty=1,
+        dimensions=PartDimensions(length=100.0, width=60.0, thickness=20.0),
+        parameters={"base_height": 8.0},
+    )
+
+    correct = evaluate_features(correct_stl, metadata)
+    missing = evaluate_features(no_slot_stl, metadata)
+    featureless = evaluate_features(no_slot_stl, featureless_metadata)
+
+    assert correct.score == pytest.approx(35.0)
+    assert correct.details["detected_expected_slots"] == 1
+    assert missing.score == pytest.approx(0.0)
+    assert featureless.score == pytest.approx(35.0)
+    assert featureless.details["note"] == "No explicit feature checks were required for this part."
 
 
 def test_scorecard_writes_valid_failure_scorecard(tmp_path: Path) -> None:
@@ -175,6 +204,49 @@ def _export_hole_wall_mesh(path: Path, holes: tuple[HoleFeature, ...]) -> Path:
             top_next = start + ((index + 1) % segments)
             bottom_current = start + segments + index
             bottom_next = start + segments + ((index + 1) % segments)
+            faces.append((top_current, bottom_current, top_next))
+            faces.append((top_next, bottom_current, bottom_next))
+    mesh = trimesh.Trimesh(vertices=vertices, faces=faces, process=False)
+    mesh.export(path)
+    return path
+
+
+def _export_slot_wall_mesh(path: Path, slots: tuple[SlotFeature, ...]) -> Path:
+    vertices: list[tuple[float, float, float]] = []
+    faces: list[tuple[int, int, int]] = []
+    samples = 28
+    for slot in slots:
+        start = len(vertices)
+        radius = slot.width / 2.0
+        straight_half_length = (slot.length - slot.width) / 2.0
+        perimeter: list[tuple[float, float]] = []
+        for x in np.linspace(-straight_half_length, straight_half_length, samples // 2):
+            perimeter.append((slot.center[0] + x, slot.center[1] + radius))
+        for angle in np.linspace(np.pi / 2.0, -np.pi / 2.0, samples // 2):
+            perimeter.append(
+                (
+                    slot.center[0] + straight_half_length + radius * np.cos(angle),
+                    slot.center[1] + radius * np.sin(angle),
+                )
+            )
+        for x in np.linspace(straight_half_length, -straight_half_length, samples // 2):
+            perimeter.append((slot.center[0] + x, slot.center[1] - radius))
+        for angle in np.linspace(-np.pi / 2.0, np.pi / 2.0, samples // 2):
+            perimeter.append(
+                (
+                    slot.center[0] - straight_half_length + radius * np.cos(angle),
+                    slot.center[1] + radius * np.sin(angle),
+                )
+            )
+        for z in (0.0, 8.0):
+            for x, y in perimeter:
+                vertices.append((x, y, z))
+        count = len(perimeter)
+        for index in range(count):
+            top_current = start + index
+            top_next = start + ((index + 1) % count)
+            bottom_current = start + count + index
+            bottom_next = start + count + ((index + 1) % count)
             faces.append((top_current, bottom_current, top_next))
             faces.append((top_next, bottom_current, bottom_next))
     mesh = trimesh.Trimesh(vertices=vertices, faces=faces, process=False)

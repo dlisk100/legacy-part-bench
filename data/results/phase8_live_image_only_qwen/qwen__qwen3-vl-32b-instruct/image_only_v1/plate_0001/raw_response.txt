@@ -1,0 +1,41 @@
+import cadquery as cq
+
+# Define dimensions
+length = 111.154
+width = 41.501
+thickness = 6.2
+hole_dia = 4.532
+slot_width = 32.476
+slot_height = 8.292
+
+# Create base plate
+result = cq.Workplane("XY").rect(length, width).extrude(thickness)
+
+# Define hole positions (from bottom-left corner)
+# Holes are arranged in two rows: bottom row (H1, H2, H3) and top row (H4, H5, H6)
+# Bottom row Y = 13.139, Top row Y = 28.362
+# X positions: H1=34.975, H2=55.577, H3=76.179, H4=34.975, H5=55.577, H6=76.179
+
+hole_positions = [
+    (34.975, 13.139),  # H1
+    (55.577, 13.139),  # H2
+    (76.179, 13.139),  # H3
+    (34.975, 28.362),  # H4
+    (55.577, 28.362),  # H5
+    (76.179, 28.362)   # H6
+]
+
+# Add holes
+for x, y in hole_positions:
+    result = result.faces("Z").workplane().moveTo(x, y).circle(hole_dia / 2).cutThruAll()
+
+# Add slot at center (H5 position, centered in Y)
+# Slot is centered at (55.577, 20.75) with width 32.476 and height 8.292
+# Slot extends from Y = 20.75 - 8.292/2 to Y = 20.75 + 8.292/2
+slot_y_center = 20.75
+slot_y_start = slot_y_center - slot_height / 2
+slot_y_end = slot_y_center + slot_height / 2
+
+# Create slot as a rectangle
+slot = cq.Workplane("XY").rect(slot_width, slot_height).moveTo(55.577, slot_y_center)
+result = result.faces("Z").workplane().add(slot).cutThruAll()

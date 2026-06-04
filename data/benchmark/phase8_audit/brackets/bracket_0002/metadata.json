@@ -1,0 +1,57 @@
+{
+  "id": "bracket_0002",
+  "family": "l_bracket",
+  "units": "mm",
+  "difficulty": 2,
+  "dimensions": {
+    "length": 66.955,
+    "width": 65.315,
+    "thickness": 36.639
+  },
+  "features": {
+    "holes": [
+      {
+        "diameter": 6.666,
+        "center": [
+          13.645,
+          15.019
+        ],
+        "through": true
+      },
+      {
+        "diameter": 6.666,
+        "center": [
+          53.31,
+          15.019
+        ],
+        "through": true
+      },
+      {
+        "diameter": 6.666,
+        "center": [
+          13.645,
+          45.276
+        ],
+        "through": true
+      },
+      {
+        "diameter": 6.666,
+        "center": [
+          53.31,
+          45.276
+        ],
+        "through": true
+      }
+    ],
+    "slots": [],
+    "steps": []
+  },
+  "parameters": {
+    "flange_thickness": 5.02
+  },
+  "files": {
+    "drawing_png": "drawing.png",
+    "target_step": "target.step",
+    "target_stl": "target.stl"
+  }
+}

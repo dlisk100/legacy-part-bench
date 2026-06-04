@@ -1,0 +1,21 @@
+[
+  {
+    "part_id": "plate_0001",
+    "family": "mounting_plate",
+    "difficulty": 3,
+    "model": "anthropic/claude-3.5-haiku",
+    "prompt_mode": "text_spec_v1",
+    "run_dir": "data/results/phase8_live_text_spec_haiku/anthropic__claude-3.5-haiku/text_spec_v1/plate_0001",
+    "total_score": 0.0,
+    "passed": false,
+    "prompt_tokens": 612,
+    "completion_tokens": 225,
+    "total_tokens": 837,
+    "cost": 0.0013896,
+    "execution_score": 0.0,
+    "export_score": 0.0,
+    "bbox_score": 0.0,
+    "volume_score": 0.0,
+    "features_score": 0.0
+  }
+]

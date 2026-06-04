@@ -1,0 +1,25 @@
+{
+  "generation_id": "gen-1780613298-IOa3yngd5kWWrZYNtsQu",
+  "model": "mistralai/ministral-3b-2512",
+  "prompt_tokens": 2697,
+  "completion_tokens": 221,
+  "total_tokens": 2918,
+  "cost": 0.0002918,
+  "is_byok": false,
+  "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+  },
+  "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "image_tokens": 0,
+    "audio_tokens": 0
+  },
+  "cost_details": {
+    "upstream_inference_cost": 0.0002918,
+    "upstream_inference_prompt_cost": 0.0002697,
+    "upstream_inference_completions_cost": 2.21e-05
+  }
+}

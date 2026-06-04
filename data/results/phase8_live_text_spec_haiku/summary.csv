@@ -1,0 +1,2 @@
+part_id,family,difficulty,model,prompt_mode,total_score,passed,execution_score,export_score,bbox_score,volume_score,features_score,prompt_tokens,completion_tokens,total_tokens,cost,run_dir
+plate_0001,mounting_plate,3,anthropic/claude-3.5-haiku,text_spec_v1,0.0,False,0.0,0.0,0.0,0.0,0.0,612,225,837,0.0013896,data/results/phase8_live_text_spec_haiku/anthropic__claude-3.5-haiku/text_spec_v1/plate_0001

@@ -16,7 +16,9 @@ from legacy_part_bench.generators.generate_dataset import (
     THICKNESS_RANGE_MM,
     WIDTH_RANGE_MM,
     generate_dataset,
+    generate_l_bracket_metadata,
     generate_mounting_plate_metadata,
+    generate_stepped_block_metadata,
 )
 
 requires_cadquery = pytest.mark.skipif(
@@ -126,3 +128,41 @@ def test_generate_dataset_cli_acceptance_creates_requested_part_folders(tmp_path
         assert (part_dir / "drawing.png").exists()
         assert (part_dir / "target.step").exists()
         assert (part_dir / "target.stl").exists()
+
+
+def test_phase8_metadata_generation_supports_new_families_and_difficulties():
+    import random
+
+    rng = random.Random(7)
+    plate = generate_mounting_plate_metadata(index=1, rng=rng, difficulty=3)
+    step = generate_stepped_block_metadata(index=1, rng=rng, difficulty=3)
+    bracket = generate_l_bracket_metadata(index=1, rng=rng, difficulty=2)
+
+    assert plate.difficulty == 3
+    assert len(plate.features.slots) == 1
+    assert step.family == "stepped_block"
+    assert step.parameters["base_height"] > 0
+    assert len(step.features.steps) == 2
+    assert bracket.family == "l_bracket"
+    assert bracket.parameters["flange_thickness"] > 0
+    assert len(bracket.features.holes) == 4
+
+
+@requires_cadquery
+@pytest.mark.parametrize("family,part_prefix", [("stepped_block", "step"), ("l_bracket", "bracket")])
+def test_generate_dataset_supports_phase8_families_and_writes_manifest(tmp_path, family, part_prefix):
+    items = generate_dataset(
+        MountingPlateGenerationConfig(
+            family=family,
+            count=1,
+            seed=42,
+            difficulty=2,
+            output_dir=tmp_path,
+        )
+    )
+
+    assert items[0].metadata.id.startswith(f"{part_prefix}_")
+    assert items[0].drawing_path.exists()
+    assert items[0].target_step_path.exists()
+    assert items[0].target_stl_path.exists()
+    assert (tmp_path / "manifest.json").exists()

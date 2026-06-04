@@ -1,9 +1,9 @@
-"""CadQuery generator for the MVP mounting-plate part family."""
+"""CadQuery generator for the mounting-plate part family."""
 
 from pathlib import Path
 from typing import Any
 
-from legacy_part_bench.dataset import BenchmarkItem, PartMetadata, save_metadata
+from legacy_part_bench.dataset import BenchmarkItem, PartMetadata, SlotFeature, save_metadata
 
 _CUTTER_MARGIN_MM = 1.0
 
@@ -31,6 +31,9 @@ def build_mounting_plate(metadata: PartMetadata) -> Any:
             .translate((0.0, 0.0, -_CUTTER_MARGIN_MM))
         )
         part = part.cut(cutter)
+
+    for slot in metadata.features.slots:
+        part = part.cut(_slot_cutter(cq, slot, dimensions.thickness))
 
     return part
 
@@ -63,8 +66,6 @@ def _validate_mounting_plate_metadata(metadata: PartMetadata) -> None:
         raise ValueError(f"Unsupported part family: {metadata.family}")
     if metadata.units != "mm":
         raise ValueError(f"Unsupported units: {metadata.units}")
-    if metadata.features.slots:
-        raise ValueError("Mounting plate MVP supports through holes only, not slots.")
 
     dimensions = metadata.dimensions
     for index, hole in enumerate(metadata.features.holes):
@@ -77,6 +78,32 @@ def _validate_mounting_plate_metadata(metadata: PartMetadata) -> None:
             raise ValueError(f"Hole {index} extends beyond the plate length.")
         if y - radius < 0 or y + radius > dimensions.width:
             raise ValueError(f"Hole {index} extends beyond the plate width.")
+
+    for index, slot in enumerate(metadata.features.slots):
+        if not slot.through:
+            raise ValueError(f"Slot {index} must be a through slot.")
+        if abs(slot.angle_degrees) > 1e-9:
+            raise ValueError(f"Slot {index} must be horizontal for the Phase 8 mounting-plate family.")
+        if slot.length <= slot.width:
+            raise ValueError(f"Slot {index} length must be greater than its width.")
+
+        half_length = slot.length / 2.0
+        half_width = slot.width / 2.0
+        x, y = slot.center
+        if x - half_length < 0 or x + half_length > dimensions.length:
+            raise ValueError(f"Slot {index} extends beyond the plate length.")
+        if y - half_width < 0 or y + half_width > dimensions.width:
+            raise ValueError(f"Slot {index} extends beyond the plate width.")
+
+
+def _slot_cutter(cq: Any, slot: SlotFeature, thickness: float) -> Any:
+    return (
+        cq.Workplane("XY")
+        .center(slot.center[0], slot.center[1])
+        .slot2D(slot.length, slot.width, angle=slot.angle_degrees)
+        .extrude(thickness + 2.0 * _CUTTER_MARGIN_MM)
+        .translate((0.0, 0.0, -_CUTTER_MARGIN_MM))
+    )
 
 
 def _import_cadquery() -> Any:

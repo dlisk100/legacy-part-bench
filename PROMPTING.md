@@ -143,6 +143,18 @@ code = extract_python_code(raw_model_response)
 metadata by default. `image_only_v1` omits the structured spec but still requires
 the drawing image and repeats the CadQuery output contract.
 
+Phase 8 structured specs may include:
+
+```text
+family: mounting_plate, stepped_block, or l_bracket
+difficulty: 1, 2, or 3
+features.holes
+features.slots
+features.steps
+parameters.base_height for stepped blocks
+parameters.flange_thickness for L-brackets
+```
+
 ## OpenRouter runner
 
 The one-model runner sends prompts through `legacy_part_bench.models.OpenRouterClient`.
@@ -160,4 +172,7 @@ python scripts/run_one_model.py \
 
 The runner reads `OPENROUTER_API_KEY`, caches raw responses by model, part id,
 prompt mode, prompt version, image hash, and temperature, then writes the usual
-run artifacts before scoring. Use `--force` to bypass the cache.
+run artifacts before scoring. Pass `--env-file .env` when the API key is stored
+locally rather than exported in the shell. Use `--force` to bypass the cache.
+When OpenRouter returns usage metadata, the runner writes `usage.json` and stores
+token counts and provider cost in `run_config.json`.

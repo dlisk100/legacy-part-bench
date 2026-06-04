@@ -1,0 +1,77 @@
+{
+  "model": "anthropic/claude-3.5-haiku",
+  "raw_response": "```python\nimport cadquery as cq\n\nresult = (\n    cq.Workplane(\"XY\")\n    .box(111.154, 41.501, 6.2)\n    .translate((111.154/2, 41.501/2, 6.2/2))\n    .faces(\">Z\")\n    .workplane()\n    .pushPoints([\n        (34.975, 13.139),\n        (55.577, 13.139),\n        (76.179, 13.139),\n        (34.975, 28.362),\n        (55.577, 28.362),\n        (76.179, 28.362)\n    ])\n    .hole(4.532)\n    .faces(\">Z\")\n    .workplane()\n    .center(55.577, 20.75)\n    .slot(32.476, 8.292, 0)\n)\n```",
+  "provider_response": {
+    "id": "gen-1780613502-2tZ6tVxo8z6Pmej1LE5R",
+    "object": "chat.completion",
+    "created": 1780613502,
+    "model": "anthropic/claude-3-5-haiku",
+    "provider": "Amazon Bedrock",
+    "system_fingerprint": null,
+    "service_tier": null,
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "end_turn",
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport cadquery as cq\n\nresult = (\n    cq.Workplane(\"XY\")\n    .box(111.154, 41.501, 6.2)\n    .translate((111.154/2, 41.501/2, 6.2/2))\n    .faces(\">Z\")\n    .workplane()\n    .pushPoints([\n        (34.975, 13.139),\n        (55.577, 13.139),\n        (76.179, 13.139),\n        (34.975, 28.362),\n        (55.577, 28.362),\n        (76.179, 28.362)\n    ])\n    .hole(4.532)\n    .faces(\">Z\")\n    .workplane()\n    .center(55.577, 20.75)\n    .slot(32.476, 8.292, 0)\n)\n```",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 612,
+      "completion_tokens": 225,
+      "total_tokens": 837,
+      "cost": 0.0013896,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0013896,
+        "upstream_inference_prompt_cost": 0.0004896,
+        "upstream_inference_completions_cost": 0.0009
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "usage": {
+    "generation_id": "gen-1780613502-2tZ6tVxo8z6Pmej1LE5R",
+    "model": "anthropic/claude-3-5-haiku",
+    "prompt_tokens": 612,
+    "completion_tokens": 225,
+    "total_tokens": 837,
+    "cost": 0.0013896,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0013896,
+      "upstream_inference_prompt_cost": 0.0004896,
+      "upstream_inference_completions_cost": 0.0009
+    }
+  },
+  "generation_id": "gen-1780613502-2tZ6tVxo8z6Pmej1LE5R",
+  "created_at_utc": "2026-06-04T22:51:47.292428+00:00"
+}

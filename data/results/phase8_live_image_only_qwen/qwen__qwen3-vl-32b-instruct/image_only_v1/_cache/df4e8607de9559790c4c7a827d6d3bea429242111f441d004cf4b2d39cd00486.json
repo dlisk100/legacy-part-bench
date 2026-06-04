@@ -1,0 +1,77 @@
+{
+  "model": "qwen/qwen3-vl-32b-instruct",
+  "raw_response": "import cadquery as cq\n\n# Define dimensions\nlength = 111.154\nwidth = 41.501\nthickness = 6.2\nhole_dia = 4.532\nslot_width = 32.476\nslot_height = 8.292\n\n# Create base plate\nresult = cq.Workplane(\"XY\").rect(length, width).extrude(thickness)\n\n# Define hole positions (from bottom-left corner)\n# Holes are arranged in two rows: bottom row (H1, H2, H3) and top row (H4, H5, H6)\n# Bottom row Y = 13.139, Top row Y = 28.362\n# X positions: H1=34.975, H2=55.577, H3=76.179, H4=34.975, H5=55.577, H6=76.179\n\nhole_positions = [\n    (34.975, 13.139),  # H1\n    (55.577, 13.139),  # H2\n    (76.179, 13.139),  # H3\n    (34.975, 28.362),  # H4\n    (55.577, 28.362),  # H5\n    (76.179, 28.362)   # H6\n]\n\n# Add holes\nfor x, y in hole_positions:\n    result = result.faces(\"Z\").workplane().moveTo(x, y).circle(hole_dia / 2).cutThruAll()\n\n# Add slot at center (H5 position, centered in Y)\n# Slot is centered at (55.577, 20.75) with width 32.476 and height 8.292\n# Slot extends from Y = 20.75 - 8.292/2 to Y = 20.75 + 8.292/2\nslot_y_center = 20.75\nslot_y_start = slot_y_center - slot_height / 2\nslot_y_end = slot_y_center + slot_height / 2\n\n# Create slot as a rectangle\nslot = cq.Workplane(\"XY\").rect(slot_width, slot_height).moveTo(55.577, slot_y_center)\nresult = result.faces(\"Z\").workplane().add(slot).cutThruAll()",
+  "provider_response": {
+    "id": "gen-1780613543-c5AzS2EXkyc4xi96DxM9",
+    "object": "chat.completion",
+    "created": 1780613543,
+    "model": "qwen/qwen3-vl-32b-instruct",
+    "provider": "Alibaba",
+    "system_fingerprint": null,
+    "service_tier": null,
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "import cadquery as cq\n\n# Define dimensions\nlength = 111.154\nwidth = 41.501\nthickness = 6.2\nhole_dia = 4.532\nslot_width = 32.476\nslot_height = 8.292\n\n# Create base plate\nresult = cq.Workplane(\"XY\").rect(length, width).extrude(thickness)\n\n# Define hole positions (from bottom-left corner)\n# Holes are arranged in two rows: bottom row (H1, H2, H3) and top row (H4, H5, H6)\n# Bottom row Y = 13.139, Top row Y = 28.362\n# X positions: H1=34.975, H2=55.577, H3=76.179, H4=34.975, H5=55.577, H6=76.179\n\nhole_positions = [\n    (34.975, 13.139),  # H1\n    (55.577, 13.139),  # H2\n    (76.179, 13.139),  # H3\n    (34.975, 28.362),  # H4\n    (55.577, 28.362),  # H5\n    (76.179, 28.362)   # H6\n]\n\n# Add holes\nfor x, y in hole_positions:\n    result = result.faces(\"Z\").workplane().moveTo(x, y).circle(hole_dia / 2).cutThruAll()\n\n# Add slot at center (H5 position, centered in Y)\n# Slot is centered at (55.577, 20.75) with width 32.476 and height 8.292\n# Slot extends from Y = 20.75 - 8.292/2 to Y = 20.75 + 8.292/2\nslot_y_center = 20.75\nslot_y_start = slot_y_center - slot_height / 2\nslot_y_end = slot_y_center + slot_height / 2\n\n# Create slot as a rectangle\nslot = cq.Workplane(\"XY\").rect(slot_width, slot_height).moveTo(55.577, slot_y_center)\nresult = result.faces(\"Z\").workplane().add(slot).cutThruAll()",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 2654,
+      "completion_tokens": 592,
+      "total_tokens": 3246,
+      "cost": 0.000522288,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.000522288,
+        "upstream_inference_prompt_cost": 0.000276016,
+        "upstream_inference_completions_cost": 0.000246272
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "usage": {
+    "generation_id": "gen-1780613543-c5AzS2EXkyc4xi96DxM9",
+    "model": "qwen/qwen3-vl-32b-instruct",
+    "prompt_tokens": 2654,
+    "completion_tokens": 592,
+    "total_tokens": 3246,
+    "cost": 0.000522288,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000522288,
+      "upstream_inference_prompt_cost": 0.000276016,
+      "upstream_inference_completions_cost": 0.000246272
+    }
+  },
+  "generation_id": "gen-1780613543-c5AzS2EXkyc4xi96DxM9",
+  "created_at_utc": "2026-06-04T22:52:31.707977+00:00"
+}

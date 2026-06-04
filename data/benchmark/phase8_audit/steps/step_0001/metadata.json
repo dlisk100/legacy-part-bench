@@ -1,0 +1,35 @@
+{
+  "id": "step_0001",
+  "family": "stepped_block",
+  "units": "mm",
+  "difficulty": 3,
+  "dimensions": {
+    "length": 111.154,
+    "width": 41.501,
+    "thickness": 25.426
+  },
+  "features": {
+    "holes": [],
+    "slots": [],
+    "steps": [
+      {
+        "x_start": 23.175,
+        "length": 64.803,
+        "top_height": 18.504
+      },
+      {
+        "x_start": 37.593,
+        "length": 35.966,
+        "top_height": 25.426
+      }
+    ]
+  },
+  "parameters": {
+    "base_height": 10.043
+  },
+  "files": {
+    "drawing_png": "drawing.png",
+    "target_step": "target.step",
+    "target_stl": "target.stl"
+  }
+}

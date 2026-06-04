@@ -86,7 +86,10 @@ def _write_run_config(
     config = {
         "run_type": "local_answer",
         "part_id": metadata.id,
+        "family": metadata.family,
+        "difficulty": metadata.difficulty,
         "part_dir": str(item_dir.resolve()),
+        "parameters": metadata.parameters,
         "source_code_file": str(code_file.resolve()),
         "extracted_code_file": staged_code_file.name,
         "timeout_seconds": timeout_seconds,

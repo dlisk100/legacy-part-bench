@@ -87,6 +87,8 @@ def _render_leaderboard(frame) -> None:
             "bbox": st.column_config.NumberColumn(format="%.2f"),
             "volume": st.column_config.NumberColumn(format="%.2f"),
             "features": st.column_config.NumberColumn(format="%.2f"),
+            "total_tokens": st.column_config.NumberColumn(format="%d"),
+            "total_cost": st.column_config.NumberColumn(format="%.6f"),
         },
     )
 
@@ -115,6 +117,8 @@ def _render_per_part_results(frame) -> None:
             "bbox_score",
             "volume_score",
             "features_score",
+            "total_tokens",
+            "cost",
             "run_dir",
         )
         if column in frame
@@ -123,7 +127,10 @@ def _render_per_part_results(frame) -> None:
         frame[columns].sort_values(["part_id", "model", "prompt_mode"]),
         width="stretch",
         hide_index=True,
-        column_config={"total_score": st.column_config.NumberColumn(format="%.2f")},
+        column_config={
+            "total_score": st.column_config.NumberColumn(format="%.2f"),
+            "cost": st.column_config.NumberColumn(format="%.6f"),
+        },
     )
 
 
@@ -198,6 +205,7 @@ def _artifact_rows(run: DashboardRun) -> list[dict[str, str]]:
         EXTRACTED_CODE_FILENAME,
         "execution_log.json",
         "scorecard.json",
+        "usage.json",
         "generated.step",
         "generated.stl",
     ]

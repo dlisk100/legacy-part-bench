@@ -1,0 +1,47 @@
+{
+  "run_type": "openrouter_model",
+  "part_id": "plate_0001",
+  "family": "mounting_plate",
+  "difficulty": 3,
+  "part_dir": "/Users/davidlisk/Development/legacy-part-bench/data/benchmark/phase8_audit/plates/plate_0001",
+  "parameters": {},
+  "model": "anthropic/claude-3.5-haiku",
+  "prompt_mode": "text_spec_v1",
+  "prompt_version": "v1",
+  "temperature": 0.0,
+  "max_tokens": 1800,
+  "timeout_seconds": 45.0,
+  "executor": "docker",
+  "run_key": "b4d0ef593a459e472d68c29034647ecab6cc2a5d4741fdeaa0851969ec236ad3",
+  "image_path": null,
+  "prompt_text": "You are given a mechanical part specification.\n\nCreate executable CadQuery Python code for the part.\n\nRequirements:\n- Use CadQuery.\n- Use millimeters.\n- Place the lower-left-bottom corner of the part at (0, 0, 0).\n- Length runs along +X.\n- Width runs along +Y.\n- Thickness/height runs along +Z.\n- Assign the final CadQuery object to a variable named `result`.\n- Return only Python code. Do not include Markdown or explanations.\n\nPart specification:\n{\n  \"difficulty\": 3,\n  \"dimensions\": {\n    \"length\": 111.154,\n    \"thickness\": 6.2,\n    \"width\": 41.501\n  },\n  \"family\": \"mounting_plate\",\n  \"features\": {\n    \"holes\": [\n      {\n        \"center\": [\n          34.975,\n          13.139\n        ],\n        \"diameter\": 4.532,\n        \"through\": true\n      },\n      {\n        \"center\": [\n          55.577,\n          13.139\n        ],\n        \"diameter\": 4.532,\n        \"through\": true\n      },\n      {\n        \"center\": [\n          76.179,\n          13.139\n        ],\n        \"diameter\": 4.532,\n        \"through\": true\n      },\n      {\n        \"center\": [\n          34.975,\n          28.362\n        ],\n        \"diameter\": 4.532,\n        \"through\": true\n      },\n      {\n        \"center\": [\n          55.577,\n          28.362\n        ],\n        \"diameter\": 4.532,\n        \"through\": true\n      },\n      {\n        \"center\": [\n          76.179,\n          28.362\n        ],\n        \"diameter\": 4.532,\n        \"through\": true\n      }\n    ],\n    \"slots\": [\n      {\n        \"angle_degrees\": 0.0,\n        \"center\": [\n          55.577,\n          20.75\n        ],\n        \"length\": 32.476,\n        \"through\": true,\n        \"width\": 8.292\n      }\n    ],\n    \"steps\": []\n  },\n  \"files\": {\n    \"drawing_png\": \"drawing.png\",\n    \"target_step\": \"target.step\",\n    \"target_stl\": \"target.stl\"\n  },\n  \"id\": \"plate_0001\",\n  \"parameters\": {},\n  \"units\": \"mm\"\n}\n",
+  "created_at_utc": "2026-06-04T22:51:42.652444+00:00",
+  "cache_hit": false,
+  "provider_model": "anthropic/claude-3-5-haiku",
+  "generation_id": "gen-1780613502-2tZ6tVxo8z6Pmej1LE5R",
+  "usage": {
+    "generation_id": "gen-1780613502-2tZ6tVxo8z6Pmej1LE5R",
+    "model": "anthropic/claude-3-5-haiku",
+    "prompt_tokens": 612,
+    "completion_tokens": 225,
+    "total_tokens": 837,
+    "cost": 0.0013896,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0013896,
+      "upstream_inference_prompt_cost": 0.0004896,
+      "upstream_inference_completions_cost": 0.0009
+    }
+  }
+}

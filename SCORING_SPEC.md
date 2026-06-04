@@ -68,13 +68,15 @@ This gives zero credit at or above 30% volume error.
 
 ## Feature score v0
 
-Initial feature score focuses on through-holes in mounting plates.
+Initial feature score focuses on through-holes and horizontal through-slots.
 
 Score components can include:
 
 ```text
 expected hole exists near target center
+expected slot exists near target center
 hole appears to go through the part
+slot appears to go through the part
 diameter approximately correct if measurable
 no severe extra/missing features if detectable
 ```
@@ -85,13 +87,18 @@ Initial scoring can be heuristic. It must at least distinguish:
 correct holes
 missing some holes
 missing all holes
+correct slots
+missing slots
 ```
 
 Current v0 implementation detects an expected through hole by looking for STL
 mesh vertices near the expected circular wall radius, with enough angular
 coverage and vertices near both the top and bottom of the part. This is an MVP
 heuristic for generated mounting plates, not a general feature-recognition
-system.
+system. Horizontal slots use a similar boundary-vertex heuristic along the slot
+wall. Parts with no explicit hole or slot features, such as simple stepped
+blocks, receive full feature credit because their geometry is judged by bounding
+box and volume in v0.
 
 ## Scorecard format
 

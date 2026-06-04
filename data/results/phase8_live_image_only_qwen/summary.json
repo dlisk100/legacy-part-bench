@@ -1,0 +1,21 @@
+[
+  {
+    "part_id": "plate_0001",
+    "family": "mounting_plate",
+    "difficulty": 3,
+    "model": "qwen/qwen3-vl-32b-instruct",
+    "prompt_mode": "image_only_v1",
+    "run_dir": "data/results/phase8_live_image_only_qwen/qwen__qwen3-vl-32b-instruct/image_only_v1/plate_0001",
+    "total_score": 0.0,
+    "passed": false,
+    "prompt_tokens": 2654,
+    "completion_tokens": 592,
+    "total_tokens": 3246,
+    "cost": 0.000522288,
+    "execution_score": 0.0,
+    "export_score": 0.0,
+    "bbox_score": 0.0,
+    "volume_score": 0.0,
+    "features_score": 0.0
+  }
+]

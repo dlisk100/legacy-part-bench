@@ -1,0 +1,33 @@
+import cadquery as cq
+
+# Define dimensions
+length = 111.154
+width = 41.501
+thickness = 6.2
+
+# Create base plate
+result = cq.Workplane("XY").rect(length, width).extrude(thickness)
+
+# Define hole parameters
+hole_diameter = 4.532
+hole_centers = [
+    [34.975, 13.139],
+    [55.577, 13.139],
+    [76.179, 13.139],
+    [34.975, 28.362],
+    [55.577, 28.362],
+    [76.179, 28.362]
+]
+
+# Add holes
+for center in hole_centers:
+    result = result.faces("+Z").workplane().circle(hole_diameter / 2).cutThruAll()
+
+# Add slot
+slot_center = [55.577, 20.75]
+slot_length = 32.476
+slot_width = 8.292
+
+# Create slot as a rectangle
+slot = cq.Workplane("XY").rect(slot_length, slot_width).move(slot_center[0] - slot_length / 2, slot_center[1] - slot_width / 2)
+result = result.cut(slot.extrude(thickness))

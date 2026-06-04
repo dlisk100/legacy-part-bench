@@ -385,6 +385,12 @@ Render target and generated STL previews to PNG and show them side by side.
 
 ## Phase 8 — Benchmark expansion
 
+Status: implemented for the deterministic local benchmark loop. The Phase 8
+scope adds mounting-plate slots, stepped blocks, L-brackets, difficulty tiers,
+image-only/text-only benchmark modes, OpenRouter usage/cost tracking, batch
+summaries, manifests, and reproducible docs. Advanced mechanical features remain
+out of scope unless explicitly requested.
+
 ### Milestone 24: Slots in mounting plates
 
 Add horizontal through-slots.

@@ -11,12 +11,18 @@ from typing import Any
 
 import requests
 
+from legacy_part_bench.results.run_store import normalize_provider_usage
+
 OPENROUTER_CHAT_COMPLETIONS_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_TIMEOUT_SECONDS = 120.0
 
 
 class OpenRouterError(RuntimeError):
     """Raised when an OpenRouter request cannot produce usable model text."""
+
+    def __init__(self, message: str, *, raw_json: dict[str, Any] | None = None) -> None:
+        super().__init__(message)
+        self.raw_json = raw_json
 
 
 @dataclass(frozen=True)
@@ -26,6 +32,8 @@ class OpenRouterResponse:
     content: str
     raw_json: dict[str, Any]
     model: str
+    usage: dict[str, Any] | None = None
+    generation_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -87,13 +95,23 @@ class OpenRouterClient:
         except ValueError as exc:
             raise OpenRouterError("OpenRouter response was not valid JSON.") from exc
 
-        content = extract_assistant_content(raw_json)
-        return OpenRouterResponse(content=content, raw_json=raw_json, model=model)
+        try:
+            content = extract_assistant_content(raw_json)
+        except OpenRouterError as exc:
+            raise OpenRouterError(str(exc), raw_json=raw_json) from exc
+        return OpenRouterResponse(
+            content=content,
+            raw_json=raw_json,
+            model=str(raw_json.get("model") or model),
+            usage=normalize_provider_usage(raw_json),
+            generation_id=raw_json.get("id") if isinstance(raw_json.get("id"), str) else None,
+        )
 
     def _headers(self) -> dict[str, str]:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
+            "X-OpenRouter-Title": self.app_title,
             "X-Title": self.app_title,
         }
         if self.http_referer:

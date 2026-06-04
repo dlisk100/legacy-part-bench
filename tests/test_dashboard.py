@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 import trimesh
 
 from legacy_part_bench.dashboard.data import (
@@ -50,6 +51,8 @@ def test_discover_runs_builds_leaderboard_and_failure_tables(tmp_path: Path) -> 
     assert leaderboard["model"].tolist() == ["model/b", "model/a"]
     assert leaderboard.loc[leaderboard["model"] == "model/a", "average_score"].item() == 60.0
     assert leaderboard.loc[leaderboard["model"] == "model/a", "failure_count"].item() == 1
+    assert leaderboard.loc[leaderboard["model"] == "model/a", "total_tokens"].item() == 36
+    assert leaderboard.loc[leaderboard["model"] == "model/a", "total_cost"].item() == pytest.approx(0.00036)
     assert failures["part_id"].tolist() == ["plate_0002"]
 
 
@@ -122,3 +125,14 @@ def write_run(
     (run_dir / "run_config.json").write_text(json.dumps(run_config), encoding="utf-8")
     (run_dir / "scorecard.json").write_text(json.dumps(scorecard), encoding="utf-8")
     (run_dir / "execution_log.json").write_text(json.dumps(execution_log), encoding="utf-8")
+    (run_dir / "usage.json").write_text(
+        json.dumps(
+            {
+                "prompt_tokens": 11,
+                "completion_tokens": 7,
+                "total_tokens": 18,
+                "cost": 0.00018,
+            }
+        ),
+        encoding="utf-8",
+    )

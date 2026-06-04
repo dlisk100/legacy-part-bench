@@ -1,0 +1,25 @@
+{
+  "dataset_version": "phase8-v1-live",
+  "seed": 42,
+  "families": [
+    "mounting_plate"
+  ],
+  "difficulty_levels": [
+    3
+  ],
+  "models": [
+    "qwen/qwen3-vl-32b-instruct"
+  ],
+  "prompt_mode": "image_only_v1",
+  "prompt_version": "v1",
+  "run_count": 1,
+  "generation_config": {
+    "dataset_dir": "/Users/davidlisk/Development/legacy-part-bench/data/benchmark/phase8_audit/plates",
+    "max_parts": 1,
+    "temperature": 0.0,
+    "max_tokens": 1800,
+    "executor": "docker"
+  },
+  "created_at_utc": "2026-06-04T22:52:45.670475+00:00",
+  "git_commit": "55deaddba2ef64b2cfaf635081692d5be9810097"
+}

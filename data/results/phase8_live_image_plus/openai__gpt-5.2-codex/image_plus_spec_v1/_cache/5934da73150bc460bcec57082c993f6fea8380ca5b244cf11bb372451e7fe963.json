@@ -1,0 +1,92 @@
+{
+  "model": "openai/gpt-5.2-codex",
+  "raw_response": "import cadquery as cq\n\nL = 111.154\nW = 41.501\nT = 6.2\n\nbase = cq.Workplane(\"XY\").box(L, W, T, centered=(False, False, False))\n\nhole_points = [\n    (34.975, 13.139),\n    (55.577, 13.139),\n    (76.179, 13.139),\n    (34.975, 28.362),\n    (55.577, 28.362),\n    (76.179, 28.362)\n]\n\nresult = (\n    base.faces(\">Z\")\n    .workplane(centerOption=\"CenterOfBoundBox\")\n    .center(-L/2, -W/2)\n    .pushPoints(hole_points)\n    .hole(4.532)\n)\n\nresult = (\n    result.faces(\">Z\")\n    .workplane(centerOption=\"CenterOfBoundBox\")\n    .center(-L/2, -W/2)\n    .center(55.577, 20.75)\n    .slot2D(32.476, 8.292, angle=0)\n    .cutThruAll()\n)",
+  "provider_response": {
+    "id": "gen-1780613325-dQ37RPByuF1Z4h0OywdD",
+    "object": "chat.completion",
+    "created": 1780613325,
+    "model": "openai/gpt-5.2-codex-20260114",
+    "provider": "OpenAI",
+    "system_fingerprint": null,
+    "service_tier": "default",
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "completed",
+        "message": {
+          "role": "assistant",
+          "content": "import cadquery as cq\n\nL = 111.154\nW = 41.501\nT = 6.2\n\nbase = cq.Workplane(\"XY\").box(L, W, T, centered=(False, False, False))\n\nhole_points = [\n    (34.975, 13.139),\n    (55.577, 13.139),\n    (76.179, 13.139),\n    (34.975, 28.362),\n    (55.577, 28.362),\n    (76.179, 28.362)\n]\n\nresult = (\n    base.faces(\">Z\")\n    .workplane(centerOption=\"CenterOfBoundBox\")\n    .center(-L/2, -W/2)\n    .pushPoints(hole_points)\n    .hole(4.532)\n)\n\nresult = (\n    result.faces(\">Z\")\n    .workplane(centerOption=\"CenterOfBoundBox\")\n    .center(-L/2, -W/2)\n    .center(55.577, 20.75)\n    .slot2D(32.476, 8.292, angle=0)\n    .cutThruAll()\n)",
+          "refusal": null,
+          "reasoning": "**Planning CADQuery plate with slots and holes**\n\nI'm setting the plate with given dimensions and origin at lower-left-bottom, then will create holes at specified positions using a top face workplane. For the slot, I'll use the slot2D method centered at the given point, assuming the length parameter is the overall slot length, then cut through all.**Finalizing workplane origin and hole/slot placement**\n\nThe plate will be created with the lower-left-bottom at (0,0,0) using a non-centered box, then on the top face I'll shift the workplane origin to the lower-left by centering negative half-length and half-width. Hole and slot coordinates then align naturally relative to this origin, allowing straightforward placement with pushPoints and centered slot2D calls.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.summary",
+              "summary": "**Planning CADQuery plate with slots and holes**\n\nI'm setting the plate with given dimensions and origin at lower-left-bottom, then will create holes at specified positions using a top face workplane. For the slot, I'll use the slot2D method centered at the given point, assuming the length parameter is the overall slot length, then cut through all.**Finalizing workplane origin and hole/slot placement**\n\nThe plate will be created with the lower-left-bottom at (0,0,0) using a non-centered box, then on the top face I'll shift the workplane origin to the lower-left by centering negative half-length and half-width. Hole and slot coordinates then align naturally relative to this origin, allowing straightforward placement with pushPoints and centered slot2D calls.",
+              "format": "openai-responses-v1",
+              "index": 0
+            },
+            {
+              "type": "reasoning.encrypted",
+              "data": "gAAAAABqIgDcAJj8jFZiOx--OvS1DWrWcy-9HGw1JktIpG0UGcWwDunWUDjqMvI_5sUoL7Q-oTGopcTkXZ5YjJqgLuKSYeLkHPH3ssDK8HJe889yKTrX0aOTVOI0p6EXFlUk5VLJcS5ytx8WNoCY10udRnIsfpWQo2rPlwm4XH0xEVoq30mLN2oRexTkkeWMBFqnABRp4XUrV8WqvstKeF9MOuXjLjNnTuznmBeaLmbfcdoVQer8CMNRawlpSch3dzaaELLG4EYd7DQIqEAR9oNRWDayrYdyD6Q4qp45l33mXFDuGnM8oZb1BklTlMNtXyWAYHguXEcUegwyo700nGu2P2XXVW3t2mfV8AhizxmCsK0HCDtJgLY6_ZBWfr4VX5e0JuaZZaLGsA8C6CrWEq2nmYIfQlLuiWlLLN4LQwgXU9t-wHJwMa706ESFC7GduadGxlXauwzvsWm_G9tiB0qmQBvASFP8NjaM6NllOsxfg-yWBTkt1HOod3H3csLHaRsqwwTzP9_pVi7XFW8Sv0cABX9vgkmHT7iPbuYtlr1Kkr-Z9sufb5rIns3OPi9HetteImABFVVhyZfad4qOnDYProKcUCKFjj_6Omp28mJ6V9GcsRvytYcQ1KD84wFYFDcA0HJtw3-tSCffi_o1GBkXdXRBWEw0rM6vnvkJ-EyRKhFDeFR3w2oTleo02pqGLaY4Qk162q67nSGlxM60AjXaRh0j2evvFVv3ugsFtKU1kC1YNXEbPViw2Lnr7QDeFE-3YpQRbCori8NyPL5HUzpChBRTmWa_L3xJdu1TMTZVKbY5l-he5SR0HWq_gecVqhSwZNPZKu-N_L732kQTu12EamGH5tZCOPz1dvCRz7y9sx25XlDVhkSlZxxzEPTNPQEnOWmuhPpUtoxh5b8o8X4qg7F889ygE1CVxXoFBZgQeA7P5fUMIdpLKMb9cGIp0-hCz0h_Vu5RJC8wqxL5nX53-T5xVOIjRmawz0usTdNdfAO8ZSXkC3XaY-rwWUOTzLoohSzsq7bB5DwAvM9Zo72M4uXpVTjfzWT3YqDz67FRTb5tlANMeN5zyGx0_gVqnPMySosmL4TpFbAdR2UivxWVx94-zOw7j_FyvgnNQsEzXxPraJCoSM_eTsss0bp383Pgc_W8Qf-ww_tYI9CRI8iY80LIAz_sLyJc32tPorZwgi7qMqjgviLqhMDDb9npwHx_W4jJmHF7YR8LwomAOxWEZKVVM8ePZWiEH8Zm_TLC6C_u37dLcyDV4WZKAm1vF7mJZq6Fb_WfZMJ66yAO8Dnt13iOGnFQ499Z466B69VFEtJ81xpXfS1RuuNcb9a31SdEvyOrwgImLoYuls8ztwwFEAY8a_RoJL1OgxIHFb1Cr3hIt3_LTF8V85RiogDlx5K2fUEt51UjDes--cHmd0zXpYuqb70xVRHjzv5cUtLMOGRtuysCqcDHhT59KlqM4NwAp4GkP_Y7UbxPyuxWwOLVjc1UfdtujZPaQitQQANJnw8fliHPM1sIcYUZ9FuxQbz3N0xclcF1ywOzlhjmRhbapYdjaTqkJtX8id7h9wpy-s32q6GPylUlOKM8s7PyjsH7jrNIfSkzC20wIV1nMU7hDyrzFeuwxuxDcV9m5gn8zZ0rWFUWoHaMd33kJueWlvK2Azbz6g7iVg_B9irb--3nOpgyEYTqdLhwgzIvIdBAUJt5sSp2zPieuKyfolecSVfRlLH2qgfFpTDCNvoTX052yJuUtJcwt_kGz9C6vjIRzCuzKry7qPWwGTsJ81Pc3Sf68wpCEb-8-SrUZX8Q0el4Uc95A1RN_7UHVakEVgzmarEHwrY_b13ngL8ACLrwlczI3D-CJEpE9oUJcCT6VQj-tYdAQeYHJNO83DO7I7sf0WQISWGdOT61c_rEnSOP1XbHSxxl4J6323-bquX86kup3MFy3p5dA2XxQmaEyPrNq1anty-WhnRkONas6Qi4uo-933FVA6nhw3DPVIsZwr-zsVbi4vzXk_0DLUk24h8DKhUGgmxP2564vZuJSYDB-37w8-kQ0_0CpBw9JJj4NqxmIBun30huvm2xVw81y98pDxtebG-NQ1rUxS8pvUbT4nfrMaxZu8ME_C9l3kBWdoXh2d46k9UwCRKMDRZIFVhoxuZhT-J6t1iilFTmobje61HUyavcuK20n4rs7ITuPt-usDQIze2SI_ZeG9UCjeBNqaPsKLTme3TiuoZfdQr_uK562rbq_zM14PO6PyGvUIiTK2o88u1lBlsUj2BWDZofVSX3kovNTIKxf6jfPuTrvKfwQoenBQ8V6dxrc7SSro9FhjWiAOA9AuPHc1qxMtzdEBzWeR0JlkeLySQA13ee22x3Hoj8Q9G8SQEgmMH9l_fZtJ_KOnBRKPm6b2QxlxHTMDYcrMaYzjpLSgffJH-7MtlVJtqZMfuPlFQ9frJd4u0rShJbqEMoN-TlExBYIeiyKk2MkCJ9XG2Za-6ek337Hrwy2n11b3640RDV1Mouz73EGv0fBiwTHRii8vLYsyA94fjP82Fe4McJrxEaCck1M4ci5qYkZL3X_gbyJhi95UejSE5M_pjs7Ufc4u4BJrU-8C32B0g7ekMrHPtXU2PhUgs1Z-tS4BIMU6j7QO8FDc6lK8PjuXym0PJU6wBZIp-Z3xh6tt1AWy1SRXjlpyYpmklWEoZGBqzls18jIyI2ZF-3F81D3CYYcB4LNDj48EE768LEkova6sPS2fZAx5r3vw23vSn-MOvrc0YRlj6WGN9evhWvEOnki7udNawWCV42xKDg20vX58g8jG8UY7zhx2w3oZ-j2lqfm8G2h4XZKSllnlfSJb01lBF-jN-S4sVDOAe0tiJxSDe2Yhru3H4oZtcq8WP7pufMI6yfqkBGRjC1VWRKko7IFX7lnWmbbTNZ6OTKmWoNwExnffIqM3C_-S6xow6bGmQb6F33zmZ4FOhCJ56ieaPYxq1q2bEMbXghZxb2IFoQ6oU7PNK8FMn0-MG54VSXF0hoUvs2k4OazESaLLCMu2JrNtA_i651uq2ybpx82kC85vYyOb_s9SOULKnk5COZc9szxmf37xPBhJkVoyDoVgKMI4zkWeneK-U49UF8r3YsX75f94EU3_PUEYmAoTBnyL3ho8LEmTG0DFfq8R1-S-E6cYfwY9hcuf4Gtc6Htt8nqSLPPUPhAt3cpf8ZE4YDmTGEI_rcUiGXTnxgtH8_r3GJkZKbKasYnwpFrfY26huwkB23PijxGAJcccSlWf_kpLRd3Y_WUKgO9WTc41c-TER8b10i5HyrcUnmfjq0pZ3JLgWeG0pB0QDh4vvLydfQzJ3F7RK7hgWUkcdeQABV6EuDrh_YXgQmMtMpdTmZHYlRZsbXzmDjIWZVHRz9An2lXPZz3Y5noH6P75nqtfwBx3R2ObOmp0eCq7FYGgL7k8ieKYeQi9z766z90ehe4PHmY7C6ZIzybTyRT37wJjf0Jfm_YkAVS0WZ29k8lJ2pSukzwV7dHYe0FjgOrJ71k3vty9_REQapgT9MbCwoiiQdhSu1IoDnR1r6620RgdA0mJQ-SFg_jHQ4966adt64WGGAYLluLRfauPMaQqLkTY7Ce-_sa21mlOAFmZKJjxkBq0I9PNeWMR2T_M_WjwtlgIkcq88DQOGYM1xLlshXb1BQhyHlLrrLuQDQm62yRs3rZtbI3_seS2H3Axs6twcOrKK-LLJM9dUIwtVgJMX_wNht2F1jMyarcn_8V-xYjsx7yykURIaDBlCrEHzzXLNCFypzB6zx-uNIqBMJPhWva_Opzk_b2mvU8aNvDi_4UJVebu9Kc5KStNhadmMteOMIWk4oOntWD94OlMkn0BMOjUksOOmN0U4ug3hk5zL2CeVar0lSwqZbPzDRj3L82STZUd3RLgmH1oNofcuyuXJNerxK_J-9HcN0_ycySiLfqn_dtemS1PnHgKNOJ55lqbw2UAlXRfh1CgmfQ54gPj50Tipc-RP1w2vYUWgo06mAGqxffVt6JNj-waCOXDy8y0JfDDZcRjE4RhPTUbN4MxaeXX9AblcfwyDNLsShwfqOC2rJmHshaTGmCS3kkSRpfoj1qjsFDlvNBXobFXYOEszP6EiPvNAhp0_C6ytE5xK0xoTgkD8AEZ42zo4Hlof_0Dp03K4nHcOi-oni7LzUC-KJKkXFMGRWIxTDbgwPdeN2pahqpoyQ0a9yOIUDUvcw7_rEhDzwcMOkoM3aKRhwYTY4098TKdOGsPFaZdhrio5UjQLHW44ZDwR7mOESePFzsgp-jkZQKAVxhkHmYqCUInrzRrYySFUu_lqduwqmLuW4RQzCN2LPqg-Of9nu7wOsCf6KrMQMm9M9skbpwOlnMDhzYUvecSTV5gYS-YyOAKvwJpcXgzyTRZ2xHIrZuoJOcNfkixjwFUuzRnui4uw4_h1LIwlQTySTJx7OAbUb-OfvP-s6iGLUxu7cxT76SpNlyjLBQT72sJHBfbkXrwUKhIOfuHjF7UNy6YF8_UtXj3o5PYCWquGSDYp0uC09zESOluBDAC9WbfJs12-dH8V9O8fso4kMkq1T5pquWjY1rvYXZkOX9VUMAizwErqJpcE_OYMEdGX1v5NErZPc-6wyLwOiErkA5sW3vJ53lC5P1n6Nyn57ecy6RuvVXJMHng-jDr98Zfk7UTQ0GbgEISguTxJMwcyvNne1aOBjroFU1bDtUWeOM1D5q7_nCu01hPqm3A-I2Ov1CS-VNzaWbMWPvQoZjgUruFsNCzWqILWE0EWXGck6X7BsJR6kuuZ4kDIPEErL7yDBk1vWgKTqonruIK_gav9urVdumR3NWfYpCtazFhy-qk63Mafn3C2f4Gut9cbhluovRTeJpRjAjMMN-IEhZfdU3De3MiGQFd74QZWef25n3ZzKWqnMnjI5zcZ-pd-A_XLqH8BIAMcWfKsgYH3d4DGQhiXcQIHWmze0CUn0Q8tswFDlH6GDlK-TafvABoNc6Ag6IVI7VG3x57qh5WW016cZrBTpsaDyvi5hI0h54HagpR0DyqMaArOi_lfmK6Yv9AwTKy_ptN1OSdKxPG6_Qj3ih2-rr7LZYzU4HwewBlI5KGZvjhofo0F51JSGmA817CPUisiGg9CPeTI_dF1j5wD0dzOjEwRXmmwbZdQJ0RYNT-DEO9Jpx5UfvkBuDfTnM9IdP0Wi8fNYuuJz81HlaDVoCGdpiTf3LXTDeC6jQbjipKD9qIc-LCv8iAfVNQ_GRPXNVUhUjK1NaYX2sBj_1AqG0L_T93uEdfTxY2tSlpmFQhiNcO4Pkreb-ft-VUh36ihz02YJyfu8CWs_c80Ab1p_fYhRSLNkppW6EKFsBlEIupqXkiagfrVvYHLPmtAg9g9X21eJtT0GJTeeawkSFIOR1oMZvwceLsmIlv5-zHUfw5zCxx-z1fP7ZVBQdkJMMSdFJ01ytoEGzI976ilR17IakQpkI1pkPHfoceK3b3__v4jqEVq6JKqKTuCzuL-X8soc-FPnAwp045HE1mfIrKj-yNPVcTkKpKIDLtHQiWxmx8asPS7V_iM8wLhgWDYFfmNE1NlFX5AH7O3cO7kB8_sP7bbZ37smMAQs90tE06mXS660c8KnAottga-z_8W7g2YiZBZJeQ106qzent8kIuSZyP0DVxRvjaPLudBcl4E1q71Woy23OhA93-E7FYxKB53KQeRw90ZKSxfhxPpFTEpsU6ZgNc0vcWT1XF8meWaxXsS07vCCL8YnaN4tl0HRtzZgbfmI85ACMaaf75RBI8vMmPVZUkN70psdKlZ7ZzvcLVAwfbXdH-O7AAvFt6UyDo8Qrj75LuDleJZNB8ULgZ2v3etvf_UmB7sX8sv30F7TByZ0r0Er4yVm_k7PxXMRu9MTx7yExgYLw0RHh0-INlv0OoLINcRtp95XSbhOy186FA-sn6P4V6KbWgJN0lFwrSl0_gXcfmvo2BiGGX1xreUWPnnpM0T5pZaK0DQ2_zJZrDphlqd6eIFiKgTyxb3KKFIEBL0n7AT03zFdCx9yJrEVnGeaWhef-I3xI9SeuVDJ-jGtGVgGnQym1JanZJKUixCkURwvcmfGcKfrAOOZ3upDkzS3fJjFw33U8mogXcc4M7TVDJDoEXjRVKbM4TUuDXIzroxDgWm4c26_aUOU5K81nR4jLWIdNJDEsi0472G5LyZA7sLGvgU789evisBIksSc1h-axTnfkjBQ7lc2RED8EUI7pN80QH_vQOK9oTC9GdWKSQRHHRiJ7xy_VuHKXl323ho2AiNS9nor4ZEjNb2S2XDkuiW6gifFqXcAawez9pTDTn_-SvQNHhA764hzaCjXkSCBcRISfyf6ZVoPe5VrBtqHGYC14401BQkaV12_Jpi_un0kVNTZ7jpK1zV2Rh-iWsEfZpwW43hllfemCFtfOrgJnEhsy4KEZzdX910R1GErI68yANgMa_PK1ZjRPtVPzbcuqP7rJqVWO9uJsbzSurx4AjUS9XMfgHaJHKQ-kt5SsNq3-17hJ5T1X0E6d7lM3UHCah1bw6eMeUnMoqQYAY932yP-1u69zvKN8kRueNLW41_rFAMicWUesjVYhe218uI1fb__tJjiE2ohJhczGVtSnC5cUzbhf9SQM4VAZxApVmG9Q7PGaxGS7Dd9834WXR5u1ghAH2OYb0DPnw_BgzqLWvw4GiX6qIraT16wM2eoBAqevc6xMCXz4M3NQ6XuJzlVPBrIktTh4OuSYE_KnkNOel24Ij2fZ6BC-eX3RKiQGLzTCX1rpFKchCNgt_9viwOK64cTFio3i6bluwniktV6D7jWf8W0fSUQUwJ897p8O7-orznaqGjfaHuVBeCEyP-jdKbX7ixEJOLp-Fs7JEfMzosk_za28bzAbclkwCgKYQLuQGR-FTu7aDXx51jFnITT7KuQgGfJl5yWzJC6KmiTjqvbIWTt5zeTs3xg5CoIo1e3Vgm9TU6wvpYqv7CfEQg88uZxCmU_Fw0JP2yOlUAUd26hnLLImbNdrPB2GrjCsxB_4T5QMnNdpc2kMOYZgcObWrM1osO_SyF1oVDlzCY3nHMnEeA7-0MZL1EX1D5sMYpND1dEVd-RBX5L8d85MP1UGpHLIsc169ikNK5bmszB3xddoFmqH88nyq3WF5BWgQbxxgZYPi9JkgEbYfjwMSXDTpC-FB0Y-fDpPqMmlsRo8uU5YvwXAOWoPonfAuDt9kwLZfRkLAyegAs0CUK2gHFkf0KIVBeHDHKZpzIqBA6neRb7ekOah0aPA5EKx2SICPoZ3UvN2xkbjmW_DAounHobS_XuACznTbmH26W1zpnLeS-dbC6tEtuDEk0oZepn4v6HfD1zxaYY0QPmvOGDNkk1UqVPbfMry_OQNGkUjV7MxuOmbe9bji6D8hH2Y4TiVOS4oOU_ZI5gsJPRCeW5gxTGAgFWtAXFQf7BzJg6LZAeTYuhUk8LY_DM-IeY7UHsxjIm3sMHrRZ5b1cof-SYi0vWy5qgfJdRgJT0pVTMzgQOp-a5mYmy61uAPGNd6sdWU69DKEfI4ebR_D-V31RN2HyJWvTooGGYdjOJUxLQbVz8fMP1Sh4stXpw0IIvVBAP8lv1jBWU0tjqInNrLyg2l0gmqWgv_ZuBtvQGEeKYyClXStagu6apEWNTAFYzZxwvGSSbKCJNLxOiVyIZES-DxqEjmepr4dQd2Eb8ZXUAvH4uveYTw7R0lSadEB0cOsOZOLEQXTd5V7c2uEsimcsVW48VWeVX7tWgfcGGLxWhmkboAq6E6B7Q1m0StXDLquNE8S39Q38lhGfwWOttHxbfVReQjFslq8K6om4PlQjLoGJJzKuaYueaf9YeGNjtlFjN8KfCpfh1jgwTHOxOEMOz8A0z5Xkj6l8Nx7IWo4EZDjBDaA==",
+              "format": "openai-responses-v1",
+              "id": "rs_0e2ce7d5d69254c4016a2200cedfbc8196acef19a4979fec6f",
+              "index": 1
+            }
+          ]
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 3300,
+      "completion_tokens": 1694,
+      "total_tokens": 4994,
+      "cost": 0.029491,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.029491,
+        "upstream_inference_prompt_cost": 0.005775,
+        "upstream_inference_completions_cost": 0.023716
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1408,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "usage": {
+    "generation_id": "gen-1780613325-dQ37RPByuF1Z4h0OywdD",
+    "model": "openai/gpt-5.2-codex-20260114",
+    "prompt_tokens": 3300,
+    "completion_tokens": 1694,
+    "total_tokens": 4994,
+    "cost": 0.029491,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1408,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.029491,
+      "upstream_inference_prompt_cost": 0.005775,
+      "upstream_inference_completions_cost": 0.023716
+    }
+  },
+  "generation_id": "gen-1780613325-dQ37RPByuF1Z4h0OywdD",
+  "created_at_utc": "2026-06-04T22:49:00.602526+00:00"
+}

@@ -1,0 +1,19 @@
+{
+  "success": false,
+  "status": "runtime_error",
+  "code_path": "/work/input.py",
+  "output_dir": "/work/output",
+  "generated_step": "generated.step",
+  "generated_stl": "generated.stl",
+  "duration_seconds": 13.500921,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "",
+  "error": "ValueError: Cannot convert object type <class 'cadquery.occ_impl.shapes.Wire'> to vector.",
+  "traceback": "Traceback (most recent call last):\n  File \"/opt/legacy_part_bench/execute_cadquery.py\", line 154, in execute_cadquery_file_in_process\n    exec(compiled, namespace)\n  File \"/work/input.py\", line 32, in <module>\n    slot = cq.Workplane(\"XY\").rect(slot_length, slot_width).move(slot_center[0] - slot_length / 2, slot_center[1] - slot_width / 2)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/cadquery/cq.py\", line 1733, in move\n    p = self._findFromPoint(True)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/cadquery/cq.py\", line 1360, in _findFromPoint\n    raise ValueError(f\"Cannot convert object type {type(obj)} to vector.\")\nValueError: Cannot convert object type <class 'cadquery.occ_impl.shapes.Wire'> to vector.\n",
+  "artifacts": {
+    "generated.step": false,
+    "generated.stl": false,
+    "execution_log.json": true
+  }
+}

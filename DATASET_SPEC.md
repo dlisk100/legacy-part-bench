@@ -43,8 +43,10 @@ data/benchmark/
         "through": true
       }
     ],
-    "slots": []
+    "slots": [],
+    "steps": []
   },
+  "parameters": {},
   "files": {
     "drawing_png": "drawing.png",
     "target_step": "target.step",
@@ -71,9 +73,12 @@ Hole centers are specified as:
 
 with the hole axis along Z for mounting plates.
 
-## Initial part family: mounting plate
+## Part families
 
-A mounting plate is a rectangular solid with through-holes.
+### Mounting plate
+
+A mounting plate is a rectangular solid with through-holes and optional
+horizontal through-slots.
 
 Required parameters:
 
@@ -82,6 +87,7 @@ length
 width
 thickness
 holes
+slots
 ```
 
 Hole parameters:
@@ -90,6 +96,53 @@ Hole parameters:
 diameter
 center
 through
+```
+
+Slot parameters:
+
+```text
+length
+width
+center
+through
+angle_degrees (0 for Phase 8 horizontal slots)
+```
+
+### Stepped block
+
+A stepped block is a rectangular base with one or two full-width raised steps.
+
+Metadata uses:
+
+```text
+dimensions.length
+dimensions.width
+dimensions.thickness as overall height
+features.steps
+parameters.base_height
+```
+
+Each step records:
+
+```text
+x_start
+length
+top_height
+```
+
+### L-bracket
+
+An L-bracket has a horizontal base flange, a vertical flange along the back
+edge, and through-holes in the base flange.
+
+Metadata uses:
+
+```text
+dimensions.length
+dimensions.width
+dimensions.thickness as overall height
+features.holes
+parameters.flange_thickness
 ```
 
 ## Random generation rules
@@ -108,6 +161,14 @@ minimum hole-to-hole center distance: 2.5 × hole_diameter
 
 Random generation must be deterministic by seed.
 
+Phase 8 generation adds:
+
+```text
+difficulty 1: simpler geometry
+difficulty 2: moderate features/offsets
+difficulty 3: harder mounting plates or multi-step blocks
+```
+
 ## Drawing requirements v0
 
 For mounting plates, `drawing.png` should show:
@@ -119,10 +180,13 @@ overall width
 thickness note
 hole diameter callout
 hole center coordinates or dimensions from edges
+slot dimensions and center coordinates when present
 units: mm
 ```
 
-The drawing does not need to meet full drafting standards in v0. It must be readable and consistent.
+Stepped blocks and L-brackets should include readable top and side views. The
+drawing does not need to meet full drafting standards in v0. It must be readable
+and consistent.
 
 ## Dataset versioning
 

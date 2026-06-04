@@ -44,8 +44,11 @@ This benchmark tests a practical combination of capabilities:
 The first version should stay intentionally narrow:
 
 ```text
-1 part family: mounting plates
-10 generated parts
+3 part families:
+  - mounting_plate
+  - stepped_block
+  - l_bracket
+10+ generated parts
 3 prompt modes:
   - text spec only
   - image + structured spec
@@ -55,6 +58,8 @@ CadQuery output
 Dockerized execution
 basic deterministic scoring
 Streamlit dashboard
+difficulty tiers 1, 2, and 3
+batch manifests and OpenRouter usage/cost tracking
 ```
 
 Do not start with assemblies, GD&T, threads, scanned drawings, sheet-metal bend radii, or SolidWorks integration.
@@ -187,8 +192,9 @@ python scripts/run_one_model.py \
   --output-dir data/results/openrouter_test/plate_0001
 ```
 
-Set `OPENROUTER_API_KEY` before live model runs. The cache key uses the model,
-part id, prompt mode, prompt version, drawing image hash, and temperature; pass
+Set `OPENROUTER_API_KEY` before live model runs. If the key lives in a local
+`.env`, pass `--env-file .env`. The cache key uses the model, part id, prompt
+mode, prompt version, drawing image hash, temperature, and `max_tokens`; pass
 `--force` to bypass a cached response. Docker is the default executor for
 model-generated code; use `--executor local` only for local development.
 
@@ -230,8 +236,10 @@ Example `metadata.json`:
         "through": true
       }
     ],
-    "slots": []
+    "slots": [],
+    "steps": []
   },
+  "parameters": {},
   "files": {
     "drawing_png": "drawing.png",
     "target_step": "target.step",
@@ -253,11 +261,10 @@ Initial 100-point score:
 | Hole/feature correctness | 35 |
 
 The v0 evaluators load STL files with `trimesh`, compare bounding-box extents
-against metadata dimensions, compare volume against the target STL, and use a
-mounting-plate-specific through-hole heuristic. The feature heuristic looks for
-mesh vertices on the expected circular hole wall near both top and bottom faces;
-it is intentionally simple, but distinguishes correct, partially missing, and
-absent through holes for the MVP.
+against metadata dimensions, compare volume against the target STL, and use
+MVP feature heuristics for expected through-holes and horizontal through-slots.
+Featureless stepped blocks receive full feature credit because their current
+shape is judged by bounding box and volume.
 
 Example scorecard:
 
@@ -306,6 +313,7 @@ The first end-to-end loop should not call any model. It should use a local, hand
 ```bash
 python scripts/generate_dataset.py \
   --family mounting_plate \
+  --difficulty 1 \
   --count 10 \
   --seed 42 \
   --output-dir data/benchmark
@@ -337,6 +345,31 @@ python scripts/evaluate_local_answer.py \
 ```
 
 Only after local generation, execution, and scoring works should model calls be added.
+
+Phase 8 family generation examples:
+
+```bash
+python scripts/generate_dataset.py \
+  --family mounting_plate \
+  --difficulty 3 \
+  --count 2 \
+  --seed 42 \
+  --output-dir data/benchmark/phase8_plates
+
+python scripts/generate_dataset.py \
+  --family stepped_block \
+  --difficulty 3 \
+  --count 2 \
+  --seed 42 \
+  --output-dir data/benchmark/phase8_steps
+
+python scripts/generate_dataset.py \
+  --family l_bracket \
+  --difficulty 2 \
+  --count 2 \
+  --seed 42 \
+  --output-dir data/benchmark/phase8_brackets
+```
 
 ## CAD execution
 
@@ -380,7 +413,8 @@ python scripts/run_one_model.py \
   --part-dir data/benchmark/plate_0001 \
   --model anthropic/claude-sonnet-4.5 \
   --prompt-mode image_plus_spec_v1 \
-  --output-dir data/results/runs
+  --output-dir data/results/runs \
+  --env-file .env
 ```
 
 Then batch:
@@ -391,8 +425,13 @@ python scripts/run_benchmark.py \
   --models anthropic/claude-sonnet-4.5 openai/gpt-4.1-mini google/gemini-2.5-flash \
   --prompt-mode image_plus_spec_v1 \
   --max-parts 10 \
-  --output-dir data/results
+  --output-dir data/results \
+  --env-file .env
 ```
+
+Batch runs write `summary.csv`, `summary.json`, and `manifest.json`. Individual
+OpenRouter runs write `usage.json` when token and cost metadata are available
+from the provider response.
 
 ## Dashboard
 

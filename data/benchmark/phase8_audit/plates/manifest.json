@@ -1,0 +1,21 @@
+{
+  "dataset_version": "phase8-v1",
+  "seed": 42,
+  "families": [
+    "mounting_plate"
+  ],
+  "difficulty_levels": [
+    3
+  ],
+  "models": [],
+  "prompt_mode": null,
+  "prompt_version": null,
+  "run_count": 0,
+  "generation_config": {
+    "count": 2,
+    "family": "mounting_plate",
+    "difficulty": 3
+  },
+  "created_at_utc": "2026-06-04T22:45:47.814464+00:00",
+  "git_commit": "55deaddba2ef64b2cfaf635081692d5be9810097"
+}

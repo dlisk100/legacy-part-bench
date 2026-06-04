@@ -1,0 +1,47 @@
+{
+  "run_type": "openrouter_model",
+  "part_id": "plate_0001",
+  "family": "mounting_plate",
+  "difficulty": 3,
+  "part_dir": "/Users/davidlisk/Development/legacy-part-bench/data/benchmark/phase8_audit/plates/plate_0001",
+  "parameters": {},
+  "model": "qwen/qwen3-vl-32b-instruct",
+  "prompt_mode": "image_only_v1",
+  "prompt_version": "v1",
+  "temperature": 0.0,
+  "max_tokens": 1800,
+  "timeout_seconds": 45.0,
+  "executor": "docker",
+  "run_key": "df4e8607de9559790c4c7a827d6d3bea429242111f441d004cf4b2d39cd00486",
+  "image_path": "/Users/davidlisk/Development/legacy-part-bench/data/benchmark/phase8_audit/plates/plate_0001/drawing.png",
+  "prompt_text": "You are given a dimensioned mechanical drawing image.\n\nCreate executable CadQuery Python code for the part.\n\nRequirements:\n- Use CadQuery.\n- Use millimeters.\n- Place the lower-left-bottom corner of the part at (0, 0, 0).\n- Length runs along +X.\n- Width runs along +Y.\n- Thickness/height runs along +Z.\n- Assign the final CadQuery object to a variable named `result`.\n- Return only Python code. Do not include Markdown or explanations.\n",
+  "created_at_utc": "2026-06-04T22:52:23.415410+00:00",
+  "cache_hit": false,
+  "provider_model": "qwen/qwen3-vl-32b-instruct",
+  "generation_id": "gen-1780613543-c5AzS2EXkyc4xi96DxM9",
+  "usage": {
+    "generation_id": "gen-1780613543-c5AzS2EXkyc4xi96DxM9",
+    "model": "qwen/qwen3-vl-32b-instruct",
+    "prompt_tokens": 2654,
+    "completion_tokens": 592,
+    "total_tokens": 3246,
+    "cost": 0.000522288,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000522288,
+      "upstream_inference_prompt_cost": 0.000276016,
+      "upstream_inference_completions_cost": 0.000246272
+    }
+  }
+}

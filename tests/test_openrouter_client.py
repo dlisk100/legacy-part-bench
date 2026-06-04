@@ -66,7 +66,17 @@ def test_create_completion_posts_openrouter_payload(monkeypatch):
             return None
 
         def json(self):
-            return {"choices": [{"message": {"content": "result = 1"}}]}
+            return {
+                "id": "gen-test",
+                "model": "provider/test-model",
+                "choices": [{"message": {"content": "result = 1"}}],
+                "usage": {
+                    "prompt_tokens": 10,
+                    "completion_tokens": 5,
+                    "total_tokens": 15,
+                    "cost": 0.000123,
+                },
+            }
 
     def fake_post(url, headers, json, timeout):
         captured["url"] = url
@@ -86,6 +96,10 @@ def test_create_completion_posts_openrouter_payload(monkeypatch):
     )
 
     assert response.content == "result = 1"
+    assert response.generation_id == "gen-test"
+    assert response.model == "provider/test-model"
+    assert response.usage["total_tokens"] == 15
+    assert response.usage["cost"] == 0.000123
     assert captured["headers"]["Authorization"] == "Bearer test-key"
     assert captured["json"]["model"] == "test/model"
     assert captured["json"]["messages"][0]["content"] == "make CAD"

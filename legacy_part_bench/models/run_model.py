@@ -14,6 +14,7 @@ from legacy_part_bench.evaluators import score_run
 from legacy_part_bench.models.openrouter_client import OpenRouterClient, OpenRouterError
 from legacy_part_bench.models.prompts import PromptMode, render_prompt_for_item
 from legacy_part_bench.models.response_parser import parse_model_response
+from legacy_part_bench.results.run_store import normalize_provider_usage, write_usage
 from legacy_part_bench.sandbox.execute_cadquery import (
     ExecutionLog,
     execute_cadquery_file,
@@ -22,6 +23,7 @@ from legacy_part_bench.sandbox.execute_cadquery import (
 from legacy_part_bench.sandbox.sandbox_runner import DockerSandboxConfig, run_in_docker_sandbox
 
 RAW_RESPONSE_FILENAME = "raw_response.txt"
+PROVIDER_RESPONSE_FILENAME = "provider_response.json"
 EXTRACTED_CODE_FILENAME = "extracted_code.py"
 RUN_CONFIG_FILENAME = "run_config.json"
 CACHE_DIRNAME = "_cache"
@@ -53,6 +55,16 @@ class ModelRunResult:
     scorecard: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class CachedModelResponse:
+    """A model response loaded from cache or returned by OpenRouter."""
+
+    raw_response: str
+    raw_json: dict[str, Any]
+    usage: dict[str, Any]
+    cache_hit: bool
+
+
 def run_model_on_item(
     *,
     item_dir: Path | str,
@@ -74,6 +86,7 @@ def run_model_on_item(
         prompt_version=config.prompt_version,
         image_hash=file_sha256(prompt.image_path) if prompt.image_path else None,
         temperature=config.temperature,
+        max_tokens=config.max_tokens,
     )
     _write_run_config(
         run_dir=resolved_run_dir,
@@ -87,14 +100,24 @@ def run_model_on_item(
     cache_dir = resolved_run_dir.parent / CACHE_DIRNAME
     cache_record_path = cache_dir / f"{run_key}.json"
     try:
-        raw_response, cache_hit = _get_or_create_response(
+        model_response = _get_or_create_response(
             cache_record_path=cache_record_path,
             prompt_text=prompt.text,
             image_path=prompt.image_path,
             config=config,
             client=client,
         )
+        raw_response = model_response.raw_response
+        cache_hit = model_response.cache_hit
         (resolved_run_dir / RAW_RESPONSE_FILENAME).write_text(raw_response, encoding="utf-8")
+        write_usage(model_response.usage, resolved_run_dir)
+        _update_run_config_with_response_metadata(
+            run_dir=resolved_run_dir,
+            cache_hit=cache_hit,
+            usage=model_response.usage,
+            provider_model=model_response.raw_json.get("model"),
+            generation_id=model_response.raw_json.get("id"),
+        )
 
         parsed = parse_model_response(raw_response)
         (resolved_run_dir / EXTRACTED_CODE_FILENAME).write_text(parsed.code, encoding="utf-8")
@@ -112,6 +135,7 @@ def run_model_on_item(
                 timeout_seconds=config.timeout_seconds,
             )
     except Exception as exc:  # noqa: BLE001 - model-run boundary writes failure artifacts.
+        _write_available_provider_failure_artifacts(resolved_run_dir, exc)
         _write_model_failure_log(resolved_run_dir, exc)
         cache_hit = False
 
@@ -132,6 +156,7 @@ def build_run_key(
     prompt_version: str,
     image_hash: str | None,
     temperature: float,
+    max_tokens: int | None = None,
 ) -> str:
     """Build the deterministic cache key specified for model calls."""
 
@@ -142,6 +167,7 @@ def build_run_key(
         "prompt_version": prompt_version,
         "image_hash": image_hash,
         "temperature": temperature,
+        "max_tokens": max_tokens,
     }
     encoded = json.dumps(key_payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
@@ -162,10 +188,17 @@ def _get_or_create_response(
     image_path: Path | None,
     config: ModelRunConfig,
     client: OpenRouterClient | None,
-) -> tuple[str, bool]:
+) -> CachedModelResponse:
     if cache_record_path.exists() and not config.force:
         record = json.loads(cache_record_path.read_text(encoding="utf-8"))
-        return str(record["raw_response"]), True
+        raw_json = record.get("provider_response") if isinstance(record.get("provider_response"), dict) else {}
+        usage = record.get("usage") if isinstance(record.get("usage"), dict) else normalize_provider_usage(raw_json)
+        return CachedModelResponse(
+            raw_response=str(record["raw_response"]),
+            raw_json=raw_json,
+            usage=usage,
+            cache_hit=True,
+        )
 
     active_client = client or OpenRouterClient.from_env()
     response = active_client.create_completion(
@@ -175,6 +208,7 @@ def _get_or_create_response(
         temperature=config.temperature,
         max_tokens=config.max_tokens,
     )
+    usage = response.usage or normalize_provider_usage(response.raw_json)
     cache_record_path.parent.mkdir(parents=True, exist_ok=True)
     cache_record_path.write_text(
         json.dumps(
@@ -182,6 +216,8 @@ def _get_or_create_response(
                 "model": config.model,
                 "raw_response": response.content,
                 "provider_response": response.raw_json,
+                "usage": usage,
+                "generation_id": response.generation_id,
                 "created_at_utc": datetime.now(UTC).isoformat(),
             },
             indent=2,
@@ -189,7 +225,12 @@ def _get_or_create_response(
         + "\n",
         encoding="utf-8",
     )
-    return response.content, False
+    return CachedModelResponse(
+        raw_response=response.content,
+        raw_json=response.raw_json,
+        usage=usage,
+        cache_hit=False,
+    )
 
 
 def _load_item(item_dir: Path) -> BenchmarkItem:
@@ -209,7 +250,10 @@ def _write_run_config(
     payload = {
         "run_type": "openrouter_model",
         "part_id": item.metadata.id,
+        "family": item.metadata.family,
+        "difficulty": item.metadata.difficulty,
         "part_dir": str(item.root_dir.resolve()),
+        "parameters": item.metadata.parameters,
         "model": config.model,
         "prompt_mode": config.prompt_mode,
         "prompt_version": config.prompt_version,
@@ -227,6 +271,27 @@ def _write_run_config(
     )
 
 
+def _update_run_config_with_response_metadata(
+    *,
+    run_dir: Path,
+    cache_hit: bool,
+    usage: dict[str, Any],
+    provider_model: Any,
+    generation_id: Any,
+) -> None:
+    path = run_dir / RUN_CONFIG_FILENAME
+    payload = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    payload.update(
+        {
+            "cache_hit": cache_hit,
+            "provider_model": provider_model if isinstance(provider_model, str) else None,
+            "generation_id": generation_id if isinstance(generation_id, str) else None,
+            "usage": usage,
+        }
+    )
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
 def _write_model_failure_log(run_dir: Path, exc: BaseException) -> None:
     log = ExecutionLog(
         success=False,
@@ -236,6 +301,7 @@ def _write_model_failure_log(run_dir: Path, exc: BaseException) -> None:
         error=_failure_message(exc),
         artifacts={
             "raw_response.txt": (run_dir / RAW_RESPONSE_FILENAME).exists(),
+            "provider_response.json": (run_dir / PROVIDER_RESPONSE_FILENAME).exists(),
             "extracted_code.py": (run_dir / EXTRACTED_CODE_FILENAME).exists(),
             "generated.step": (run_dir / "generated.step").exists(),
             "generated.stl": (run_dir / "generated.stl").exists(),
@@ -249,3 +315,22 @@ def _failure_message(exc: BaseException) -> str:
     if isinstance(exc, OpenRouterError):
         return str(exc)
     return f"{type(exc).__name__}: {exc}"
+
+
+def _write_available_provider_failure_artifacts(run_dir: Path, exc: BaseException) -> None:
+    if not isinstance(exc, OpenRouterError) or not isinstance(exc.raw_json, dict):
+        return
+    raw_json = exc.raw_json
+    (run_dir / PROVIDER_RESPONSE_FILENAME).write_text(
+        json.dumps(raw_json, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    usage = normalize_provider_usage(raw_json)
+    write_usage(usage, run_dir)
+    _update_run_config_with_response_metadata(
+        run_dir=run_dir,
+        cache_hit=False,
+        usage=usage,
+        provider_model=raw_json.get("model"),
+        generation_id=raw_json.get("id"),
+    )

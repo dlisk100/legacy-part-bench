@@ -1,0 +1,77 @@
+{
+  "model": "mistralai/ministral-3b-2512",
+  "raw_response": "```python\nimport CadQuery as cq\n\nresult = (\n    cq.Workplane(\"XY\")\n    .rect(111.154, 41.501)\n    .extrude(6.2)\n    .holes(4.532)\n    .addHoles(\n        [34.975, 13.139],\n        [55.577, 13.139],\n        [76.179, 13.139],\n        [34.975, 28.362],\n        [55.577, 28.362],\n        [76.179, 28.362]\n    )\n    .addSlot(\n        8.292,\n        32.476,\n        [55.577, 20.75],\n        0.0\n    )\n)\n```",
+  "provider_response": {
+    "id": "gen-1780613298-IOa3yngd5kWWrZYNtsQu",
+    "object": "chat.completion",
+    "created": 1780613298,
+    "model": "mistralai/ministral-3b-2512",
+    "provider": "Mistral",
+    "system_fingerprint": null,
+    "service_tier": null,
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport CadQuery as cq\n\nresult = (\n    cq.Workplane(\"XY\")\n    .rect(111.154, 41.501)\n    .extrude(6.2)\n    .holes(4.532)\n    .addHoles(\n        [34.975, 13.139],\n        [55.577, 13.139],\n        [76.179, 13.139],\n        [34.975, 28.362],\n        [55.577, 28.362],\n        [76.179, 28.362]\n    )\n    .addSlot(\n        8.292,\n        32.476,\n        [55.577, 20.75],\n        0.0\n    )\n)\n```",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 2697,
+      "completion_tokens": 221,
+      "total_tokens": 2918,
+      "cost": 0.0002918,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0002918,
+        "upstream_inference_prompt_cost": 0.0002697,
+        "upstream_inference_completions_cost": 2.21e-05
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "usage": {
+    "generation_id": "gen-1780613298-IOa3yngd5kWWrZYNtsQu",
+    "model": "mistralai/ministral-3b-2512",
+    "prompt_tokens": 2697,
+    "completion_tokens": 221,
+    "total_tokens": 2918,
+    "cost": 0.0002918,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0002918,
+      "upstream_inference_prompt_cost": 0.0002697,
+      "upstream_inference_completions_cost": 2.21e-05
+    }
+  },
+  "generation_id": "gen-1780613298-IOa3yngd5kWWrZYNtsQu",
+  "created_at_utc": "2026-06-04T22:48:20.264656+00:00"
+}

@@ -1,0 +1,19 @@
+{
+  "success": false,
+  "status": "runtime_error",
+  "code_path": "/work/input.py",
+  "output_dir": "/work/output",
+  "generated_step": "generated.step",
+  "generated_stl": "generated.stl",
+  "duration_seconds": 10.8103,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "",
+  "error": "ValueError: No pending wires present",
+  "traceback": "Traceback (most recent call last):\n  File \"/opt/legacy_part_bench/execute_cadquery.py\", line 154, in execute_cadquery_file_in_process\n    exec(compiled, namespace)\n  File \"/work/input.py\", line 41, in <module>\n    result = result.faces(\"Z\").workplane().add(slot).cutThruAll()\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/cadquery/cq.py\", line 3606, in cutThruAll\n    None, self._getFaces(), thruAll=True, additive=False, taper=-taper\n          ^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/cadquery/cq.py\", line 3667, in _getFaces\n    rv.extend(wiresToFaces(self.ctx.popPendingWires()))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/cadquery/cq.py\", line 117, in popPendingWires\n    raise ValueError(\"No pending wires present\")\nValueError: No pending wires present\n",
+  "artifacts": {
+    "generated.step": false,
+    "generated.stl": false,
+    "execution_log.json": true
+  }
+}

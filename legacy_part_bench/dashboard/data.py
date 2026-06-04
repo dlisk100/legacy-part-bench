@@ -17,6 +17,7 @@ EXTRACTED_CODE_FILENAME = "extracted_code.py"
 GENERATED_STL_FILENAME = "generated.stl"
 TARGET_STL_FILENAME = "target.stl"
 DRAWING_FILENAME = "drawing.png"
+USAGE_FILENAME = "usage.json"
 
 
 @dataclass(frozen=True)
@@ -27,6 +28,7 @@ class DashboardRun:
     scorecard: dict[str, Any]
     run_config: dict[str, Any]
     execution_log: dict[str, Any] | None
+    usage: dict[str, Any] | None = None
 
     @property
     def run_id(self) -> str:
@@ -116,12 +118,14 @@ def discover_runs(results_dir: Path | str) -> list[DashboardRun]:
         scorecard = _read_json(scorecard_path)
         run_config = _read_json(run_dir / RUN_CONFIG_FILENAME)
         execution_log = _read_optional_json(run_dir / EXECUTION_LOG_FILENAME)
+        usage = _read_optional_json(run_dir / USAGE_FILENAME)
         runs.append(
             DashboardRun(
                 run_dir=run_dir,
                 scorecard=scorecard,
                 run_config=run_config,
                 execution_log=execution_log,
+                usage=usage,
             )
         )
     return runs
@@ -143,6 +147,10 @@ def runs_to_frame(runs: list[DashboardRun]) -> pd.DataFrame:
             "max_score": float(run.scorecard.get("max_score", 100.0)),
             "passed": run.passed,
             "execution_failed": run.execution_failed,
+            "prompt_tokens": _usage_number(run, "prompt_tokens"),
+            "completion_tokens": _usage_number(run, "completion_tokens"),
+            "total_tokens": _usage_number(run, "total_tokens"),
+            "cost": _usage_number(run, "cost"),
         }
         for category_name, category in categories.items():
             row[f"{category_name}_score"] = float(category.get("score", 0.0))
@@ -168,6 +176,8 @@ def leaderboard_frame(frame: pd.DataFrame) -> pd.DataFrame:
                 "bbox",
                 "volume",
                 "features",
+                "total_tokens",
+                "total_cost",
             ]
         )
 
@@ -177,6 +187,8 @@ def leaderboard_frame(frame: pd.DataFrame) -> pd.DataFrame:
         average_score=("total_score", "mean"),
         pass_rate=("passed", "mean"),
         failure_count=("execution_failed", "sum"),
+        total_tokens=("total_tokens", "sum"),
+        total_cost=("cost", "sum"),
     )
 
     for category in ("execution", "export", "bbox", "volume", "features"):
@@ -216,3 +228,15 @@ def _read_optional_json(path: Path) -> dict[str, Any] | None:
     if not path.exists():
         return None
     return _read_json(path)
+
+
+def _usage_number(run: DashboardRun, key: str) -> float | int | None:
+    usage = run.usage or run.run_config.get("usage") or {}
+    if not isinstance(usage, dict):
+        return None
+    value = usage.get(key)
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return value
+    return None

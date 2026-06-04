@@ -1,0 +1,19 @@
+{
+  "success": false,
+  "status": "runtime_error",
+  "code_path": "/work/input.py",
+  "output_dir": "/work/output",
+  "generated_step": "generated.step",
+  "generated_stl": "generated.stl",
+  "duration_seconds": 0.005427,
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "",
+  "error": "ModuleNotFoundError: No module named 'CadQuery'",
+  "traceback": "Traceback (most recent call last):\n  File \"/opt/legacy_part_bench/execute_cadquery.py\", line 154, in execute_cadquery_file_in_process\n    exec(compiled, namespace)\n  File \"/work/input.py\", line 1, in <module>\n    import CadQuery as cq\nModuleNotFoundError: No module named 'CadQuery'\n",
+  "artifacts": {
+    "generated.step": false,
+    "generated.stl": false,
+    "execution_log.json": true
+  }
+}

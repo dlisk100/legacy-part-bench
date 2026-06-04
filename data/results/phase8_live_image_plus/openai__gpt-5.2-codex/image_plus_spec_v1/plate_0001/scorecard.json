@@ -1,0 +1,321 @@
+{
+  "total_score": 99.999998,
+  "max_score": 100.0,
+  "categories": {
+    "execution": {
+      "score": 20.0,
+      "max_score": 20.0,
+      "details": {
+        "success": true,
+        "status": "success",
+        "duration_seconds": 13.13487,
+        "error": null,
+        "artifacts": {
+          "generated.step": true,
+          "generated.stl": true,
+          "execution_log.json": true
+        }
+      }
+    },
+    "export": {
+      "score": 10.0,
+      "max_score": 10.0,
+      "details": {
+        "generated_geometry": {
+          "path": "data/results/phase8_live_image_plus/openai__gpt-5.2-codex/image_plus_spec_v1/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 26422.794175614512,
+          "vertex_count": 1776,
+          "face_count": 3576,
+          "error": null
+        }
+      }
+    },
+    "bbox": {
+      "score": 19.999998,
+      "max_score": 20.0,
+      "details": {
+        "target_extents": [
+          111.154,
+          41.501,
+          6.2
+        ],
+        "generated_extents": [
+          111.15399932861328,
+          41.500999450683594,
+          6.199999809265137
+        ],
+        "relative_errors": [
+          6.040148938517923e-09,
+          1.3236220908397866e-08,
+          3.076368765465898e-08
+        ],
+        "dimension_scores": [
+          0.9999999697992553,
+          0.9999999338188954,
+          0.9999998461815617
+        ],
+        "generated_geometry": {
+          "path": "data/results/phase8_live_image_plus/openai__gpt-5.2-codex/image_plus_spec_v1/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 26422.794175614512,
+          "vertex_count": 1776,
+          "face_count": 3576,
+          "error": null
+        }
+      }
+    },
+    "volume": {
+      "score": 15.0,
+      "max_score": 15.0,
+      "details": {
+        "target_volume": 26422.79417561452,
+        "generated_volume": 26422.794175614512,
+        "relative_error": 2.7536669913957756e-16,
+        "target_geometry": {
+          "path": "data/benchmark/phase8_audit/plates/plate_0001/target.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 26422.79417561452,
+          "vertex_count": 1776,
+          "face_count": 3576,
+          "error": null
+        },
+        "generated_geometry": {
+          "path": "data/results/phase8_live_image_plus/openai__gpt-5.2-codex/image_plus_spec_v1/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 26422.794175614512,
+          "vertex_count": 1776,
+          "face_count": 3576,
+          "error": null
+        }
+      }
+    },
+    "features": {
+      "score": 35.0,
+      "max_score": 35.0,
+      "details": {
+        "family": "mounting_plate",
+        "expected_holes": 6,
+        "detected_expected_holes": 6,
+        "expected_slots": 1,
+        "detected_expected_slots": 1,
+        "missed_holes": [],
+        "missed_slots": [],
+        "detections": [
+          {
+            "expected_center": [
+              34.975,
+              13.139
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              55.577,
+              13.139
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              76.179,
+              13.139
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              34.975,
+              28.362
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              55.577,
+              28.362
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              76.179,
+              28.362
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          }
+        ],
+        "hole_detections": [
+          {
+            "expected_center": [
+              34.975,
+              13.139
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              55.577,
+              13.139
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              76.179,
+              13.139
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              34.975,
+              28.362
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              55.577,
+              28.362
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          },
+          {
+            "expected_center": [
+              76.179,
+              28.362
+            ],
+            "expected_diameter": 4.532,
+            "detected": true,
+            "radial_vertex_count": 252,
+            "angular_bins_hit": 12,
+            "z_levels_hit": 2,
+            "radial_tolerance": 0.36256
+          }
+        ],
+        "slot_detections": [
+          {
+            "expected_center": [
+              55.577,
+              20.75
+            ],
+            "expected_length": 32.476,
+            "expected_width": 8.292,
+            "detected": true,
+            "boundary_vertex_count": 256,
+            "x_regions_hit": 2,
+            "z_levels_hit": 2,
+            "boundary_tolerance": 0.66336
+          }
+        ],
+        "generated_geometry": {
+          "path": "data/results/phase8_live_image_plus/openai__gpt-5.2-codex/image_plus_spec_v1/plate_0001/generated.stl",
+          "exists": true,
+          "loadable": true,
+          "mesh_valid": true,
+          "watertight": true,
+          "extents": [
+            111.15399932861328,
+            41.500999450683594,
+            6.199999809265137
+          ],
+          "volume": 26422.794175614512,
+          "vertex_count": 1776,
+          "face_count": 3576,
+          "error": null
+        },
+        "heuristic": "Detects expected through holes and horizontal through-slots by looking for mesh vertices on the expected cut walls with broad XY coverage and vertices near both local through-cut surfaces."
+      }
+    }
+  },
+  "passed": true,
+  "notes": []
+}
